@@ -24,6 +24,17 @@ Route::group(['middleware' => 'auth'], function() {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profile/{slug}', 'ProfileController@index');
+
+Route::get('/changePhoto', function(){
+  return view('profile.pic');
+});
+
+Route::post('/uploadPhoto', 'ProfileController@uploadPhoto');
+
+Route::get('editProfile', 'ProfileController@editProfileForm');
+
+Route::post('/updateProfile', 'ProfileController@updateProfile');
+
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\Friendable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\profile;
@@ -9,6 +10,8 @@ use App\profile;
 class User extends Authenticatable
 {
     use Notifiable;
+
+    use Friendable;
 
     /**
      * The attributes that are mass assignable.

@@ -19,7 +19,7 @@
 
                 <div class="panel-body">
                   <div class="col-sm-12 col-md-12">
-                    @foreach($allUsers as $uList)
+                    @foreach($FriendRequests as $uList)
 
                     <div class="row" style="border-bottom: 1px solid #ccc; margin-bottom: 15px">
                       <div class="col-md-2 pull left">
@@ -27,32 +27,16 @@
                       </div>
                       <div class="col-md-7 pull-left">
                       <h3 style="margin:0px;"><a href="">{{ucwords($uList->name)}}</a></h3>
-                        <p><i class="fa fa-globe"></i> {{$uList->city}} - {{$uList->country}}</p>
-                        <p>{{$uList->about}}</p>
+                        <p><b>Gender:</b> {{ucwords($uList->gender)}}</p>
+                        <p><b>E-mail:</b> {{$uList->email}}</p>
                         </div>
 
                     <div class="col-md-3 pull-right">
 
-                      <?php
-                      $check = DB::table('friendships')
-                      -> where('user_requested', '=', $uList->id)
-                      -> where('requester', '=', Auth::user()->id)
-                      -> first();
-
-                      if ($check == '') {
-
-
-
-                       ?>
                     <p>
-                      <a href="{{url('/')}}/addFriend/{{$uList->id}}"
-                        class="btn btn-info btn-sm">Add to Friend</a>
+                      <a href=""
+                        class="btn btn-info btn-sm">Confirm</a>
                     </p>
-                    <?php
-                  } else {?>
-                     <p>Request Already Sent</p>
-                  <?php } ?>
-
 
                     </div>
                   </div>

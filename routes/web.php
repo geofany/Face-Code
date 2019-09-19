@@ -45,6 +45,8 @@ Route::get('/findFriends', 'ProfileController@findFriends');
 
 Route::get('/addFriend/{id}', 'ProfileController@sendRequest');
 
+Route::get('/requests', 'ProfileController@requests');
+
 
 });
 

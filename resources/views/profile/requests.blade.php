@@ -19,6 +19,11 @@
 
                 <div class="panel-body">
                   <div class="col-sm-12 col-md-12">
+                    @if (session()->has('msg'))
+                      <p class="alert alert-success">
+                                          {{session()->get('msg')}}
+                                        </p>
+                    @endif
                     @foreach($FriendRequests as $uList)
 
                     <div class="row" style="border-bottom: 1px solid #ccc; margin-bottom: 15px">
@@ -32,16 +37,12 @@
                         </div>
 
                     <div class="col-md-3 pull-right">
-@if (session()->has('msg'))
-  <p>
-                      {{session()->get('msg')}}
-                    </p>
-@else
+
 <p>
-  <a href="{{url('/accept/')}}/{{$uList->id}}"
+  <a href="{{url('/accept/')}}/{{$uList->name}}/{{$uList->id}}"
     class="btn btn-info btn-sm">Confirm</a>
 </p>
-@endif
+
                     </div>
                   </div>
                     @endforeach

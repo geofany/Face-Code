@@ -72,12 +72,13 @@ public function requests(){
 
     $FriendRequests = DB::table('friendships')
 -> rightJoin('users', 'users.id', '=', 'friendships.requester')
+-> whereNull('status')
 -> where('friendships.user_requested', '=', $uid)->get();
 
   return view('profile.requests', compact('FriendRequests'));
 }
 
-public function accept($id) {
+public function accept($name, $id) {
   $uid = Auth::user()->id;
   $checkRequest = friendships::where('requester', $id)
   ->where('user_requested', $uid)
@@ -90,10 +91,10 @@ public function accept($id) {
     -> update(['status' => 1]);
 
     if ($updateFriendship) {
-      return back()->with('msg', 'You Are Now Friend with this');
+      return back()->with('msg', 'You Are Now Friend with '.$name);
     }
   } else {
-    return back()->with('msg', 'You Are Now Friend with this');
+    return back()->with('msg', 'You Are Now Friend with '.$name);
   }
 }
 

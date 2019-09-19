@@ -39,7 +39,7 @@
                       @if (Auth::check())
                         <li><a href="{{ url('/profile') }}/{{Auth::user()->slug}}">Profile</a></li>
                         <li><a href="{{ url('/findFriends') }}">Find Friends</a></li>
-                        <li><a href="{{ url('/requests') }}">My Requests</a></li>
+                        <li><a href="{{ url('/requests') }}">My Requests ({{App\friendships::whereNull('status')->where('user_requested', Auth::user()->id)->count()}})</a></li>
                         @endif
                     </ul>
 

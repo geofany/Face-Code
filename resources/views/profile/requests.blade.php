@@ -32,12 +32,16 @@
                         </div>
 
                     <div class="col-md-3 pull-right">
-
-                    <p>
-                      <a href=""
-                        class="btn btn-info btn-sm">Confirm</a>
+@if (session()->has('msg'))
+  <p>
+                      {{session()->get('msg')}}
                     </p>
-
+@else
+<p>
+  <a href="{{url('/accept/')}}/{{$uList->id}}"
+    class="btn btn-info btn-sm">Confirm</a>
+</p>
+@endif
                     </div>
                   </div>
                     @endforeach

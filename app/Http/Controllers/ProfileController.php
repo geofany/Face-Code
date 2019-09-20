@@ -98,4 +98,27 @@ public function accept($name, $id) {
   }
 }
 
+public function friends() {
+  echo  $uid = Auth::user()->id;
+  $friends1 = DB::table('friendships')
+->leftJoin('users', 'users.id', 'friendships.user_requested')
+->where('status', 1)
+->where('requester', $uid)
+->get();
+
+
+  $friends2 = DB::table('friendships')
+->leftJoin('users', 'users.id', 'friendships.requester')
+->where('status', 1)
+->where('user_requested', $uid )
+->get();
+
+  $friends = array_merge($friends1->toArray(), $friends2->toArray());
+  return view('profile.friends', compact('friends'));
+}
+
+public function requestRemove($id){
+echo $id;
+}
+
 }

@@ -118,7 +118,12 @@ public function friends() {
 }
 
 public function requestRemove($id){
-echo $id;
+DB::table('friendships')
+->where('user_requested', Auth::user()->id)
+->where('requester', $id)
+->delete();
+
+return back()->with('msg', 'Request Has Been Deleted');
 }
 
 }

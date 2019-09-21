@@ -11,15 +11,29 @@
 |
 */
 
+Route::get('/test', function () {
+
+$notifications = DB::table('notifications')->where('user_logged', Auth::user()->id)
+->get();
+
+dd($notifications);
+});
+
+Route::get('/count', function () {
+
+$count =  App\notifications::
+  where('status', 1)
+  ->where('user_hero', Auth::user()->id)
+  ->count();
+
+echo $count;
+});
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/test', function () {
-    return Auth::user()->test();
-});
-
-
 
 Auth::routes();
 

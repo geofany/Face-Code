@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\friendships;
+use App\notifications;
 
 class ProfileController extends Controller
 {
@@ -90,7 +91,15 @@ public function accept($name, $id) {
     -> where('requester', $id)
     -> update(['status' => 1]);
 
-    if ($updateFriendship) {
+$notifications = new notifications;
+$notifications->note = 'Accepted Your Friend Request';
+$notifications->user_hero = $id;
+$notifications->user_logged = Auth::user()->id;
+$notifications->status = '1';
+$notifications->save();
+
+
+    if ($notifications) {
       return back()->with('msg', 'You Are Now Friend with '.$name);
     }
   } else {

@@ -76,14 +76,19 @@
                                         </span>
                                     </a>
                                     <?php
-                                    $notes = DB::table('notifications')->where('user_hero', Auth::user()->id)->get();
+                                    $notes = DB::table('users')
+->leftJoin('notifications', 'users.id', 'notifications.user_logged')
+->where('user_hero', Auth::user()->id)
+->where('status', 1)
+->orderBy('notifications.id', 'desc')
+->get();
                                     ?>
 
 
 
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach($notes as $note)
-                                           <li><a href="#">{{$note -> note}}</a></li>
+                                           <li><a href="{{url('/notifications')}}/{{$note->id}}"><b style="color:GREEN">{{ucwords($note->name)}}</b> {{$note -> note}}</a></li>
                                        @endforeach
 
                                    </ul>

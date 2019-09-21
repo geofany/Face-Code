@@ -135,4 +135,20 @@ class ProfileController extends Controller
     return back()->with('msg', 'Request Has Been Deleted');
   }
 
+  public function notifications($id) {
+    $uid = Auth::user()->id;
+    $notes = DB::table('notifications')
+    ->leftJoin('users', 'users.id', 'notifications.user_logged')
+    ->where('notifications.id', $id)
+    ->where('user_hero', $uid)
+    ->orderBy('notifications.id', 'desc')
+    ->get();
+
+    $updateNotifications = DB::table('notifications')
+    -> where('notifications.id', $id)
+    -> update(['status' => 0]);
+
+return view('profile.notifications', compact('notes'));
+  }
+
 }

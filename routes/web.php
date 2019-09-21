@@ -11,24 +11,6 @@
 |
 */
 
-Route::get('/test', function () {
-
-	$notifications = DB::table('notifications')->where('user_hero', Auth::user()->id)
-	->get();
-
-	dd($notifications);
-});
-
-Route::get('/count', function () {
-
-	$count =  App\notifications::
-	where('status', 1)
-	->where('user_hero', Auth::user()->id)
-	->count();
-
-	echo $count;
-});
-
 
 
 Route::get('/', function () {
@@ -66,6 +48,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/friends', 'ProfileController@friends');
 
 	Route::get('/requestRemove/{id}', 'ProfileController@requestRemove');
+
+Route::get('/notifications/{id}', 'ProfileController@notifications');
 
 
 });

@@ -8,34 +8,34 @@
     <li><a href="{{url('/editProfile')}}">Edit Profile</a></li>
     <li><a href="">Change Image</a></li>
   </ol>
-    <div class="row">
+  <div class="row">
 
-      @include('profile.sidebar')
+    @include('profile.sidebar')
 
-        <div class="col-md-9">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{Auth::user()->name}}</div>
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{Auth::user()->name}}</div>
 
-                <div class="panel-body">
+        <div class="panel-body">
 
 
 
-                  <div class="col-md-4">
-                    Welcome To Your Profile
+          <div class="col-md-4">
+            Welcome To Your Profile
 
-                    <img src="{{Auth::user()->pic}}" width="100px" height="100px"/><br>
-                    <br>
-                    <hr>
+            <img src="{{Auth::user()->pic}}" width="100px" height="100px"/><br>
+            <br>
+            <hr>
 
-                    <form action="{{url('/')}}/uploadPhoto" method="post" enctype="multipart/form-data">
-                      <input type="hidden" name="_token" value="{{csrf_token()}}">
-                      <input type="file" name="pic" class="form-control">
-                      <input type="submit"class="btn btn-success" name="button">
-                    </form>
-                  </div>
-                </div>
-            </div>
+            <form action="{{url('/')}}/uploadPhoto" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="{{csrf_token()}}">
+              <input type="file" name="pic" class="form-control">
+              <input type="submit"class="btn btn-success" name="button">
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 @endsection

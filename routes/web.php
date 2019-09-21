@@ -13,26 +13,26 @@
 
 Route::get('/test', function () {
 
-$notifications = DB::table('notifications')->where('user_logged', Auth::user()->id)
-->get();
+	$notifications = DB::table('notifications')->where('user_hero', Auth::user()->id)
+	->get();
 
-dd($notifications);
+	dd($notifications);
 });
 
 Route::get('/count', function () {
 
-$count =  App\notifications::
-  where('status', 1)
-  ->where('user_hero', Auth::user()->id)
-  ->count();
+	$count =  App\notifications::
+	where('status', 1)
+	->where('user_hero', Auth::user()->id)
+	->count();
 
-echo $count;
+	echo $count;
 });
 
 
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Auth::routes();
@@ -41,31 +41,31 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
 
-Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/profile/{slug}', 'ProfileController@index');
+	Route::get('/profile/{slug}', 'ProfileController@index');
 
-Route::get('/changePhoto', function(){
-  return view('profile.pic');
-});
+	Route::get('/changePhoto', function(){
+		return view('profile.pic');
+	});
 
-Route::post('/uploadPhoto', 'ProfileController@uploadPhoto');
+	Route::post('/uploadPhoto', 'ProfileController@uploadPhoto');
 
-Route::get('editProfile', 'ProfileController@editProfileForm');
+	Route::get('editProfile', 'ProfileController@editProfileForm');
 
-Route::post('/updateProfile', 'ProfileController@updateProfile');
+	Route::post('/updateProfile', 'ProfileController@updateProfile');
 
-Route::get('/findFriends', 'ProfileController@findFriends');
+	Route::get('/findFriends', 'ProfileController@findFriends');
 
-Route::get('/addFriend/{id}', 'ProfileController@sendRequest');
+	Route::get('/addFriend/{id}', 'ProfileController@sendRequest');
 
-Route::get('/requests', 'ProfileController@requests');
+	Route::get('/requests', 'ProfileController@requests');
 
-Route::get('/accept/{name}/{id}', 'ProfileController@accept');
+	Route::get('/accept/{name}/{id}', 'ProfileController@accept');
 
-Route::get('/friends', 'ProfileController@friends');
+	Route::get('/friends', 'ProfileController@friends');
 
-Route::get('/requestRemove/{id}', 'ProfileController@requestRemove');
+	Route::get('/requestRemove/{id}', 'ProfileController@requestRemove');
 
 
 });

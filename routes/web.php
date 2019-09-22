@@ -14,7 +14,12 @@
 
 
 Route::get('/', function () {
-	return view('welcome');
+	$posts = DB::table('posts')
+->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
+->leftJoin('users', 'users.id', 'posts.user_id')
+->orderBy('posts.id', 'Desc')
+->get();
+	return view('welcome', compact('posts'));
 });
 
 Auth::routes();
@@ -51,7 +56,20 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/notifications/{id}', 'ProfileController@notifications');
 
+Route::get('/unfriend/{id}', function($id) {
+ $loggedUser = Auth::user()->id;
+
+DB::table('friendships')
+->where('requester', $loggedUser)
+->where('user_requested', $id)
+->delete();
+return back()->with('msg', 'You are not friend with this');
 
 });
+
+
+});
+
+Route::get('posts', 'HomeController@index');
 
 Route::get('/logout', 'Auth\LoginController@logout');

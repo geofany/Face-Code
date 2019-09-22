@@ -88,7 +88,22 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach($notes as $note)
-                                           <li><a href="{{url('/notifications')}}/{{$note->id}}"><b style="color:GREEN">{{ucwords($note->name)}}</b> {{$note -> note}}</a></li>
+<a href="{{url('/notifications')}}/{{$note->id}}">
+                                           <li>
+<div class="row" style="min-width:450px;">
+
+<div class="col-md-2">
+
+
+<img src="{{$note->pic}}" style="width:40px; margin:5px;" class="img-rounded">
+</div>
+<div class="col-md-10">
+
+                                            <b style="color:GREEN">{{ucwords($note->name)}}</b>
+<span style="color:black;">{{$note -> note}}</span>
+</div>
+</div>
+</li></a>
                                        @endforeach
 
                                    </ul>
@@ -105,7 +120,7 @@
 
 
                                   <li>
-                                      <a href="{{ url('profile') }}">
+                                      <a href="{{ url('profile') }}/{{Auth::user()->slug}}">
                                         Profile
                                     </a>
 

@@ -11,8 +11,12 @@ use App\notifications;
 class ProfileController extends Controller
 {
   public function index($slug) {
+    $userData = DB::table('users')
+    ->leftJoin('profiles', 'profiles.user_id', 'users.id')
+    ->where('slug', $slug)
+    ->get();
 
-    return view('profile.index')->with('data', Auth::user()->profile);;
+    return view('profile.index', compact('userData'))->with('data', Auth::user()->profile);;
   }
 
   public function uploadPhoto(Request $request){
@@ -108,7 +112,7 @@ class ProfileController extends Controller
   }
 
   public function friends() {
-    echo  $uid = Auth::user()->id;
+    $uid = Auth::user()->id;
     $friends1 = DB::table('friendships')
     ->leftJoin('users', 'users.id', 'friendships.user_requested')
     ->where('status', 1)

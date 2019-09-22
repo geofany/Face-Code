@@ -9,11 +9,13 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         html, body {
-            background-color: #fff;
+            background-color: #ddd;
             color: #636b6f;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
@@ -69,8 +71,7 @@
         @if (Route::has('login'))
         <div class="top-right links">
             @if (Auth::check())
-            <a href="{{ url('/home') }}">Home</a>
-            <a href="{{ url('/profile') }}/{{Auth::user()->slug}}">Profile</a>
+            <a href="{{ url('/home') }}">Dashboard</a>
             @else
             <a href="{{ url('/login') }}">Login</a>
             <a href="{{ url('/register') }}">Register</a>
@@ -78,13 +79,24 @@
         </div>
         @endif
 
-        <div class="content">
-            <div class="title m-b-md">
-                FaceCode
-            </div>
+<div class="container">
+@foreach($posts as $post)
+  <div class="col-md-12" style="background-color:#fff">
+<div class="col-md-2 pull-left">
+  <img src="{{$post->pic}}" style="width:100px; margin:10px;">
+</div>
 
+<div class="col-md-10">
+<h3>{{ucwords($post->name)}}</h3>
+<p><i class="fa fa-globe"></i> {{ucwords($post->city)}} | {{ucwords($post->country)}}</p>
+</div>
 
-        </div>
+<p class="col-md-12" style="color:#333;">{{$post->content}}</p>
+
+  </div>
+@endforeach
+</div>
+
     </div>
 </body>
 </html>

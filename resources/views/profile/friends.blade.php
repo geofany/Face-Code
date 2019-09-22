@@ -40,7 +40,7 @@
 
                 <p>
 
-                  <a href=""
+                  <a href="{{url('/unfriend')}}/{{$uList->id}}"
                   class="btn btn-default btn-sm">Unfriend</a>
                 </p>
 

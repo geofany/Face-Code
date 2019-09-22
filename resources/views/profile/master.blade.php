@@ -79,7 +79,7 @@
                                     $notes = DB::table('users')
 ->leftJoin('notifications', 'users.id', 'notifications.user_logged')
 ->where('user_hero', Auth::user()->id)
-->where('status', 1)
+//->where('status', 1)
 ->orderBy('notifications.id', 'desc')
 ->get();
                                     ?>
@@ -89,18 +89,24 @@
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach($notes as $note)
 <a href="{{url('/notifications')}}/{{$note->id}}">
-                                           <li>
-<div class="row" style="min-width:450px;">
+@if($note->status == 1)
+                                           <li style="background:#E4E9F2; padding:10px;">
+@else
+<li style="padding:10px;">
+@endif
+<div class="row" style="min-width:350px;">
 
 <div class="col-md-2">
 
 
-<img src="{{$note->pic}}" style="width:40px; margin:5px;" class="img-rounded">
+<img src="{{$note->pic}}" style="width:50px; padding:5px; background:#FFF; border:1px solid #EEE;" class="img-rounded">
 </div>
 <div class="col-md-10">
 
-                                            <b style="color:GREEN">{{ucwords($note->name)}}</b>
-<span style="color:black;">{{$note -> note}}</span>
+                                            <b style="color:GREEN; font-size:90%;">{{ucwords($note->name)}}</b>
+<span style="color:black; font-size:90%;">{{$note -> note}}</span>
+<br>
+<small style="color:#90949C;"><i class="fa fa-users"></i> {{ date('F j, Y', strtotime($note -> created_at))}} at {{ date('H: i', strtotime($note -> created_at))}}</small>
 </div>
 </div>
 </li></a>

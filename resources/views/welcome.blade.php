@@ -80,6 +80,9 @@
         @endif
 
 <div class="container">
+<div id="aplikasi">
+  @{{pesan}}
+</div>
 @foreach($posts as $post)
   <div class="col-md-12" style="background-color:#fff">
 <div class="col-md-2 pull-left">

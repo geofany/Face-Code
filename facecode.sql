@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2019 at 11:54 AM
+-- Generation Time: Sep 22, 2019 at 11:47 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -44,7 +44,8 @@ CREATE TABLE `friendships` (
 INSERT INTO `friendships` (`id`, `requester`, `user_requested`, `status`, `updated_at`, `created_at`) VALUES
 (1, 2, 3, 1, '2019-09-21 02:47:27', '2019-09-21 02:47:27'),
 (2, 2, 4, 1, '2019-09-21 02:48:09', '2019-09-21 02:48:09'),
-(3, 2, 6, 1, '2019-09-21 02:52:23', '2019-09-21 02:52:23');
+(3, 2, 6, 1, '2019-09-21 02:52:23', '2019-09-21 02:52:23'),
+(4, 2, 5, 1, '2019-09-21 05:29:09', '2019-09-21 05:29:09');
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,9 @@ CREATE TABLE `notifications` (
 INSERT INTO `notifications` (`id`, `user_logged`, `user_hero`, `status`, `note`, `updated_at`, `created_at`) VALUES
 (2, 3, 2, 1, 'Accepted Your Friend Request', '2019-09-21 02:47:54', '2019-09-21 02:47:54'),
 (3, 4, 2, 1, 'Accepted Your Friend Request', '2019-09-21 02:48:23', '2019-09-21 02:48:23'),
-(4, 6, 2, 1, 'Accepted Your Friend Request', '2019-09-21 02:52:33', '2019-09-21 02:52:33');
+(4, 6, 2, 1, 'Accepted Your Friend Request', '2019-09-21 02:52:33', '2019-09-21 02:52:33'),
+(5, 5, 2, 1, 'Accepted Your Friend Request', '2019-09-21 05:29:15', '2019-09-21 05:29:15'),
+(6, 4, 3, 1, 'Accepted Your Friend Request', '2019-09-21 06:59:40', '2019-09-21 06:59:40');
 
 -- --------------------------------------------------------
 
@@ -103,6 +106,29 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `content`, `status`, `updated_at`, `created_at`) VALUES
+(1, 3, 'GeGas Test', 0, NULL, NULL),
+(2, 4, 'Yusa Test', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -156,10 +182,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `gender`, `slug`, `pic`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'demo', 'male', 'demo', 'http://localhost:8000/img/Asset1.png', 'demo@mail.com', '$2y$10$Onbx5qJgxqdPP/sQ/Ar./er0Wv3m.tGS0JN6jT7igvwKjsfT.qmJ.', 'x4bLSzn5V9DbIE3iv3Yuh8TabZ8oQ978DCNOogKuExko2iwaiuZM9aKcwlP0', '2019-09-14 04:49:54', '2019-09-14 04:49:54'),
-(3, 'Geofany Galindra', 'male', 'geofany-galindra', 'http://localhost:8000/img/15726340_1624014034279120_1341475946178749225_n.jpg', 'geofanygalindra@ymail.com', '$2y$10$4nP3CQIphTURNnMWMw8XBu7EKTqnTAjKsiXeaYPsy7brm9fJzz0WS', 'LpgB7x6xxWES8fEU2k3Q1zCjomf5HF9g99SxKoEcR23U9ZhSNHiTDGC3dAUk', '2019-09-14 05:19:40', '2019-09-14 05:19:40'),
-(4, 'Nur Firdausa', 'female', 'nur-firdausa', 'http://localhost:8000/img/Asset2.png', 'firdausa@gmail.com', '$2y$10$MsGGwMAufg6WuqCWLUzuWOW1o/USMVLkc4glReM56zfwmja9FinFC', 'Za3FbIuOWVmCTVamIBePndkrzherENxHZLq4YeisELjGqoncarKeJT5lMpzW', '2019-09-14 23:51:41', '2019-09-14 23:51:41'),
-(5, 'abcdef', 'male', 'abcdef', 'http://localhost:8000/img/Asset1.png', 'abcdef@gmail.com', '$2y$10$kbbbsGUnDHUc904qkwpZhOOmbWayWHuY0bBEwSB.3iriWaGqhmBcy', 'yf0I7x2Zducy8orDygs4nyrgBFWItW791SQ8i67UBCWTzPlmrmLznSCOBBe5', '2019-09-20 05:50:08', '2019-09-20 05:50:08'),
+(2, 'demo', 'male', 'demo', 'http://localhost:8000/img/Asset1.png', 'demo@mail.com', '$2y$10$Onbx5qJgxqdPP/sQ/Ar./er0Wv3m.tGS0JN6jT7igvwKjsfT.qmJ.', 'vqubdsEMq00Cmxhjd75fgfVjuEEau5DQHpBItzA19Za3uEvQ70SyYoDJ0nTv', '2019-09-14 04:49:54', '2019-09-14 04:49:54'),
+(3, 'Geofany Galindra', 'male', 'geofany-galindra', 'http://localhost:8000/img/15726340_1624014034279120_1341475946178749225_n.jpg', 'geofanygalindra@ymail.com', '$2y$10$4nP3CQIphTURNnMWMw8XBu7EKTqnTAjKsiXeaYPsy7brm9fJzz0WS', 'nUgUDazI9JGohjRxWGZyY6okTVsFuvd92t7vwXYb2OoFi3O3r3oL5NXs1CPh', '2019-09-14 05:19:40', '2019-09-14 05:19:40'),
+(4, 'Nur Firdausa', 'female', 'nur-firdausa', 'http://localhost:8000/img/Asset2.png', 'firdausa@gmail.com', '$2y$10$MsGGwMAufg6WuqCWLUzuWOW1o/USMVLkc4glReM56zfwmja9FinFC', '0F6VNMuf2i3Jnu0UtltVaodIz3tpsTCW4YanE7hocwXa62JEabrJqXkrb75Y', '2019-09-14 23:51:41', '2019-09-14 23:51:41'),
+(5, 'abcdef', 'male', 'abcdef', 'http://localhost:8000/img/Asset1.png', 'abcdef@gmail.com', '$2y$10$kbbbsGUnDHUc904qkwpZhOOmbWayWHuY0bBEwSB.3iriWaGqhmBcy', 'kQWA0ySZGagogTaekAWaodbQ6YXe8rkBWwsKaPXbGt2Gtdt5ISnQCnUBoHsi', '2019-09-20 05:50:08', '2019-09-20 05:50:08'),
 (6, 'defghi', 'female', 'defghi', 'http://localhost:8000/img/Asset2.png', 'defghi@gmail.com', '$2y$10$b8rgiZYdAVX8wtXLD6GFh.Ox8JK7Ebh5JhkASd4aN3jgjPVAGnAS2', 'GPhzryCwzNokAcl1rHCAI41yBVKEo50Ka5bN8RCw8X1CLzoHfgfgmm7dG2id', '2019-09-20 05:50:29', '2019-09-20 05:50:29');
 
 --
@@ -191,6 +217,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `profiles`
 --
 ALTER TABLE `profiles`
@@ -211,7 +243,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `friendships`
 --
 ALTER TABLE `friendships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -223,7 +255,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `profiles`

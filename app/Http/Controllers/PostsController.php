@@ -28,8 +28,18 @@ $posts = DB::table('posts')
 ->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
 ->leftJoin('users', 'users.id', 'posts.user_id')
 ->orderBy('posts.id', 'Desc')
-->take(2)
+->take(4)
 ->get();
+
+if ($createPost) {
+  $posts_json = DB::table('users')
+->leftJoin('profiles', 'profiles.user_id', 'users.id')
+->leftJoin('posts', 'posts.user_id', 'users.id')
+->orderBy('posts.id', 'Desc')
+->take(4)
+->get();
+return $posts_json;
+}
 
 }
 

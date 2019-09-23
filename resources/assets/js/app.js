@@ -33,6 +33,7 @@ created() {
   .then(response => {
   console.log(response);
   this.posts = response.data;
+
   })
   .catch(function (error) {
   console.log(error);
@@ -48,6 +49,10 @@ content: this.content
 })
 .then(function (response) {
 console.log('Saved Successfully');
+if(response.status===200) {
+// alert('Added');
+app.posts = response.data;
+}
 })
 .catch(function (error) {
 console.log(error);

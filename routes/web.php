@@ -18,9 +18,12 @@ Route::get('/', function () {
 ->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
 ->leftJoin('users', 'users.id', 'posts.user_id')
 ->orderBy('posts.id', 'Desc')
+->take(2)
 ->get();
 	return view('welcome', compact('posts'));
 });
+
+Route::post('addPost', 'PostsController@addPost');
 
 Auth::routes();
 

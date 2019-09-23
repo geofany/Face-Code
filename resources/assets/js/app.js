@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+ require('./bootstrap');
 
 
 /**
@@ -14,9 +14,27 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#aplikasi',
-    data:{
-pesan:'my new msg'
+ const app = new Vue({
+  el: '#app',
+  data: {
+    msg: "Update New Posts :",
+content: '',
+
+  },
+
+methods: {
+addPost(){
+// alert('Test');
+axios.post('http://localhost:8000/addPost', {
+content: this.content
+})
+.then(function (response) {
+console.log('Saved Successfully');
+})
+.catch(function (error) {
+console.log(error);
+});
 }
+}
+
 });

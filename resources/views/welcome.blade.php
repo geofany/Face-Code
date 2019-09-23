@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Laravel</title>
 
@@ -80,8 +81,13 @@
         @endif
 
 <div class="container">
-<div id="aplikasi">
-  @{{pesan}}
+<div id="app">
+  @{{msg}} <small style="color:green;">@{{content}}</small>
+<form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+<textarea v-model="content"></textarea>
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
+
 </div>
 @foreach($posts as $post)
   <div class="col-md-12" style="background-color:#fff">
@@ -102,4 +108,5 @@
 
     </div>
 </body>
+<script src="{{ asset('js/app.js') }}" defer></script>
 </html>

@@ -23,6 +23,16 @@ Route::get('/', function () {
 	return view('welcome', compact('posts'));
 });
 
+Route::get('/posts', function () {
+	$posts_json = DB::table('posts')
+->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
+->leftJoin('users', 'users.id', 'posts.user_id')
+->orderBy('posts.id', 'Desc')
+->take(2)
+->get();
+	return $posts_json;
+});
+
 Route::post('addPost', 'PostsController@addPost');
 
 Auth::routes();
@@ -73,6 +83,6 @@ return back()->with('msg', 'You are not friend with this');
 
 });
 
-Route::get('posts', 'HomeController@index');
+// Route::get('posts', 'HomeController@index');
 
 Route::get('/logout', 'Auth\LoginController@logout');

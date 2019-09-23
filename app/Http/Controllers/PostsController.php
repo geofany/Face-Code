@@ -17,7 +17,20 @@ return view('posts', compact('posts'));
 
 public function addPost(Request $request) {
 $content = $request->content;
-$createPost = DB::table('posts')->insert(['content' => $content,'user_id' => Auth::user()->id,'status' => 0,'created_at' => date("Y-m-d H:i:s"),'updated_at' => date("Y-m-d H:i:s")]);
+$createPost = DB::table('posts')
+->insert(['content' => $content,
+'user_id' => Auth::user()->id,
+'status' => 0,
+'created_at' => date("Y-m-d H:i:s"),
+'updated_at' => date("Y-m-d H:i:s")]);
+
+$posts = DB::table('posts')
+->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
+->leftJoin('users', 'users.id', 'posts.user_id')
+->orderBy('posts.id', 'Desc')
+->take(2)
+->get();
+
 }
 
 }

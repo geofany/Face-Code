@@ -19,8 +19,26 @@
   data: {
     msg: "Update New Posts :",
 content: '',
-
+posts:[],
   },
+
+ready: function() {
+
+this.created();
+
+},
+
+created() {
+  axios.get('http://localhost:8000/posts')
+  .then(response => {
+  console.log(response);
+  this.posts = response.data;
+  })
+  .catch(function (error) {
+  console.log(error);
+  });
+},
+
 
 methods: {
 addPost(){

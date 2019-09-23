@@ -80,30 +80,31 @@
         </div>
         @endif
 
-<div class="container">
-<div id="app">
+<div class="container" id="app">
+
   @{{msg}} <small style="color:green;">@{{content}}</small>
 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
 <textarea v-model="content"></textarea>
 <button type="submit" class="btn btn-success">Submit</button>
 </form>
 
-</div>
-@foreach($posts as $post)
+<div v-for="post in posts">
+
   <div class="col-md-12" style="background-color:#fff">
 <div class="col-md-2 pull-left">
-  <img src="{{$post->pic}}" style="width:100px; margin:10px;">
+  <img src="" style="width:100px; margin:10px;">
 </div>
 
 <div class="col-md-10">
-<h3>{{ucwords($post->name)}}</h3>
-<p><i class="fa fa-globe"></i> {{ucwords($post->city)}} | {{ucwords($post->country)}}</p>
+<h3>@{{post.name}}</h3>
+<p><i class="fa fa-globe"></i> @{{post.city}} | @{{post.country}}</p>
+<small>@{{post.created_at}}</small>
 </div>
 
-<p class="col-md-12" style="color:#333;">{{$post->content}}</p>
+<p class="col-md-12" style="color:#333;">@{{post.content}}</p>
 
   </div>
-@endforeach
+
 </div>
 
     </div>

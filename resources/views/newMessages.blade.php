@@ -4,7 +4,8 @@
 
 <div class="col-md-12" style="padding:10px">
   <div class="col-md-3 pull-left" style="background-color:#fff;">
-    <h3 align="center" style="margin-bottom:20px;">Messenger<a href="{{ url('/newMessages')}}"><i class="fa fa-pencil-square-o pull-right"></i></a></h3>
+    <h3 align="left" style="margin-bottom:20px;">Friend List <a href="{{ url('/messages')}}"><button type="button" class="btn btn-info pull-right">All Messages</button></a></h3>
+
     <div v-for="privateMsgs in privateMsgs">
       <li @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
         <div class="col-md-3 pull-left">
@@ -20,6 +21,7 @@
   </div>
   <div class="col-md-6 center-con" style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA;">
     <h3 align="center">Messages</h3>
+
     <div v-for="singleMsgs in singleMsgs">
       <div v-if="singleMsgs.user_from == <?php echo Auth::user()->id; ?>">
         <div class="col-md-12" style="margin-top:10px">

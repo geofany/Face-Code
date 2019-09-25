@@ -44780,6 +44780,24 @@ var app = new Vue({
           console.log(error);
         });
       }
+    },
+    friendID: function friendID(id) {
+      app.friend_id = id;
+    },
+    sendNewMsg: function sendNewMsg() {
+      axios.post('http://localhost:8000/sendNewMessage', {
+        friend_id: this.friend_id,
+        msg: this.newMsgFrom
+      }).then(function (response) {
+        console.log(response.data);
+
+        if (response.status === 200) {
+          window.location.replace('http://localhost:8000/messages');
+          app.msg = 'your message has been sent';
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });

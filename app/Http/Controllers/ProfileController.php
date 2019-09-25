@@ -164,18 +164,59 @@ class ProfileController extends Controller
     $userTo = $fetch_userTo[0]->user_to;
 
     $sendMsg = DB::table('messages')->insert([
-'user_to' => $userTo,
-'user_from' => Auth::user()->id,
-'msg' => $msg,
-'status' => 1,
-'conversation_id' => $conID
-]);
-if ($sendMsg) {
-  $userMsg = DB::table('messages')
-  ->join('users', 'users.id', 'messages.user_from')
-  ->where('messages.conversation_id',$conID)->get();
-  return $userMsg;
-}
+      'user_to' => $userTo,
+      'user_from' => Auth::user()->id,
+      'msg' => $msg,
+      'status' => 1,
+      'conversation_id' => $conID
+    ]);
+    if ($sendMsg) {
+      $userMsg = DB::table('messages')
+      ->join('users', 'users.id', 'messages.user_from')
+      ->where('messages.conversation_id',$conID)->get();
+      return $userMsg;
+    }
   }
+
+  public function sendNewMessage(Request $request) {
+ $msg = $request->msg;
+ $friend_id = $request->friend_id;
+  $myID = Auth::user()->id;
+
+  $checkCon1 = DB::table('conversation')->where('user_one', $myID)
+  ->where('user_two', $friend_id)->get();
+
+  $checkCon1 = DB::table('conversation')->where('user_two', $myID)
+  ->where('user_one', $friend_id)->get();
+
+  $allCons = array_merge($checkCon1->toArray(), $checkCon2->toArray());
+
+  if (count($allCons)!=0) {
+    $conID_old = $allCons[0]->id;
+
+    $MsgSent = DB::table('messages')->insert([
+    'user_from' => $myID,
+'user_to' => $friend_id,
+'msg' => $msg,
+'conversation_id' => $conID_old,
+'status' => 1
+]);
+  } else {
+$conID_new = DB::table('conversation')->insertGetId([
+'user_one' => $myID,
+'user_two' => $friend_id,
+
+
+]);
+
+    $MsgSent = DB::table('messages')->insert([
+    'user_from' => $myID,
+    'user_to' => $friend_id,
+    'msg' => $msg,
+    'conversation_id' => $conID_new,
+    'status' => 1
+    ]);
+}
+}
 
 }

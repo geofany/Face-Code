@@ -5,6 +5,10 @@ return view('messages');
 
 });
 
+Route::get('/newMessages', function() {
+return view('newMessages');
+});
+
 Route::post('/sendMessage', 'ProfileController@sendMessage');
 
 Route::get('/getMessages', function() {

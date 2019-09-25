@@ -170,7 +170,7 @@ overflow-y: scroll;
 <body>
   <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
-    <div class="top-right links" style="margin-top:0 !important;">
+    <div class="top-right links" style="position:fixed;">
       @if (Auth::check())
       <a href="{{ url('/home') }}">Dashboard</a>
       @else
@@ -213,7 +213,7 @@ overflow-y: scroll;
           <div v-for="post in posts">
             <div class="col-md-12" style="background-color:#fff">
               <div class="col-md-2 pull-left">
-                <img :src="post.pic" style="width:100px; margin:10px;">
+                <img :src="post.pic" style="width:70px; margin:50px;">
               </div>
 
               <div class="col-md-10">

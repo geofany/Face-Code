@@ -1,16 +1,17 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/messages', function() {
+return view('messages');
 
+});
+
+Route::get('/getMessages', function() {
+$allUsers = DB::table('users')
+->where('id', '!=', Auth::user()->id)
+->get();
+return $allUsers;
+
+});
 
 
 Route::get('/', function () {
@@ -28,7 +29,7 @@ Route::get('/posts', function () {
 ->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
 ->leftJoin('users', 'users.id', 'posts.user_id')
 ->orderBy('posts.id', 'Desc')
-->take(1)
+->take(4)
 ->get();
 	return $posts_json;
 });

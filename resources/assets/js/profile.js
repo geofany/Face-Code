@@ -7,6 +7,7 @@ const app = new Vue({
     content: '',
     privateMsgs : [],
     singleMsgs:[],
+    msgFrom: '',
 
   },
 
@@ -40,7 +41,21 @@ messages: function(id) {
   .catch(function (error) {
     console.log(error);
   });
+},
+
+inputHandler(e) {
+if (e.keyCode === 13 && !e.shiftKey) {
+  e.preventDefault();
+  this.sendMsg();
 }
+},
+sendMsg() {
+if (this.msgFrom) {
+  alert(this.msgFrom);
+}
+}
+
+
 
   }
 

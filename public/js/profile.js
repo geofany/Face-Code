@@ -44734,7 +44734,8 @@ var app = new Vue({
     msg: "i am from new:",
     content: '',
     privateMsgs: [],
-    singleMsgs: []
+    singleMsgs: [],
+    msgFrom: ''
   },
   ready: function ready() {
     this.created();
@@ -44755,6 +44756,17 @@ var app = new Vue({
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    inputHandler: function inputHandler(e) {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        this.sendMsg();
+      }
+    },
+    sendMsg: function sendMsg() {
+      if (this.msgFrom) {
+        alert(this.msgFrom);
+      }
     }
   }
 });

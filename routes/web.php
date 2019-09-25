@@ -6,23 +6,36 @@ return view('messages');
 });
 
 Route::get('/getMessages', function() {
-$allUsers = DB::table('users')
-->where('id', '!=', Auth::user()->id)
+$allUsers1 = DB::table('users')
+->Join('conversation', 'users.id', 'conversation.user_one')
+->where('conversation.user_two', Auth::user()->id)
 ->get();
-return $allUsers;
+// return $allUsers1;
+
+$allUsers2 = DB::table('users')
+->Join('conversation', 'users.id', 'conversation.user_two')
+->where('conversation.user_one', Auth::user()->id)
+->get();
+// return $allUsers2;
+
+return array_merge($allUsers1->toArray(), $allUsers2->toArray());
 
 });
 
 Route::get('/getMessages/{id}', function($id) {
-	$checkCon = DB::table('conversation')->where('user_one', Auth::user()->id)
-	->where('user_two', $id)
-->get();
-	if (count($checkCon) != 0) {
-		$userMsg = DB::table('messages')->where('messages.conversation_id', $checkCon[0]->id)->get();
-		return $userMsg;
-	} else {
-	echo "No Messages";
-}
+// 	$checkCon = DB::table('conversation')->where('user_one', Auth::user()->id)
+// 	->where('user_two', $id)->get();
+// 	if (count($checkCon) != 0) {
+// 		$userMsg = DB::table('messages')->where('messages.conversation_id', $checkCon[0]->id)->get();
+// 		return $userMsg;
+// 	} else {
+// 	echo "No Messages";
+// }
+
+$userMsg = DB::table('messages')
+->join('users', 'users.id', 'messages.user_from')
+->where('messages.conversation_id',$id)->get();
+return $userMsg;
 });
 
 

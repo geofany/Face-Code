@@ -13,6 +13,18 @@ return $allUsers;
 
 });
 
+Route::get('/getMessages/{id}', function($id) {
+	$checkCon = DB::table('conversation')->where('user_one', Auth::user()->id)
+	->where('user_two', $id)
+->get();
+	if (count($checkCon) != 0) {
+		$userMsg = DB::table('messages')->where('messages.conversation_id', $checkCon[0]->id)->get();
+		return $userMsg;
+	} else {
+	echo "No Messages";
+}
+});
+
 
 Route::get('/', function () {
 	$posts = DB::table('posts')

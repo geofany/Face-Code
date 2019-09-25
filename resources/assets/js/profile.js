@@ -6,6 +6,7 @@ const app = new Vue({
     msg: "i am from new:",
     content: '',
     privateMsgs : [],
+    singleMsgs:[],
 
   },
 
@@ -26,9 +27,20 @@ const app = new Vue({
       console.log(error);
     });
   },
-  
+
 
   methods: {
+messages: function(id) {
+  axios.get('http://localhost:8000/getMessages/' + id)
+  .then(response => {
+    console.log(response.data);
+    app.singleMsgs = response.data;
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 
   }
 

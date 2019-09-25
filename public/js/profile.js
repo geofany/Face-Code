@@ -44733,7 +44733,8 @@ var app = new Vue({
   data: {
     msg: "i am from new:",
     content: '',
-    privateMsgs: []
+    privateMsgs: [],
+    singleMsgs: []
   },
   ready: function ready() {
     this.created();
@@ -44746,7 +44747,16 @@ var app = new Vue({
       console.log(error);
     });
   },
-  methods: {}
+  methods: {
+    messages: function messages(id) {
+      axios.get('http://localhost:8000/getMessages/' + id).then(function (response) {
+        console.log(response.data);
+        app.singleMsgs = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),

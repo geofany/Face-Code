@@ -37,7 +37,6 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                       @if (Auth::check())
-
                       <li><a href="{{ url('/findFriends') }}">Find Friends</a></li>
                       <li><a href="{{ url('/requests') }}">My Requests
                           <span style="color:green; font-weight:bold; font-size:16px">({{App\friendships::
@@ -56,9 +55,7 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                             @else
-
-
-
+                            <li><a href="{{ url('/messages')}}">Messages</a></li>
                             <li>
                                 <a href="{{ url('/friends') }}">
                                     <i class="fa fa-users fa-2x" aria-hidden="true">

@@ -8,6 +8,7 @@ const app = new Vue({
     privateMsgs : [],
     singleMsgs:[],
     msgFrom: '',
+    conID: '',
 
   },
 
@@ -36,6 +37,7 @@ messages: function(id) {
   .then(response => {
     console.log(response.data);
     app.singleMsgs = response.data;
+    app.conID = response.data[0].conversation_id;
 
   })
   .catch(function (error) {
@@ -51,7 +53,20 @@ if (e.keyCode === 13 && !e.shiftKey) {
 },
 sendMsg() {
 if (this.msgFrom) {
-  alert(this.msgFrom);
+  axios.post('http://localhost:8000/sendMessage', {
+  conID: this.conID,
+msg: this.msgFrom
+  })
+  .then(function (response) {
+  console.log(response.data);
+  if(response.status===200) {
+  app.singleMsgs = response.data;
+  }
+
+  })
+  .catch(function (error) {
+  console.log(error);
+  });
 }
 }
 

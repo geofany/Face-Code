@@ -41,12 +41,12 @@
       </div>
     </div>
     <hr>
-
+      <input type="hidden" v-model="conID">
       <textarea class="col-md-12 form-control" v-model="msgFrom" @keydown="inputHandler"
 style="border:none; margin-top:15px;"></textarea>
 
 
-    <!-- <input type="text" v-model="conID"> -->
+
 
   </div>
 

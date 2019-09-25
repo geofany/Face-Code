@@ -152,7 +152,30 @@ class ProfileController extends Controller
     -> where('notifications.id', $id)
     -> update(['status' => 0]);
 
-return view('profile.notifications', compact('notes'));
+    return view('profile.notifications', compact('notes'));
+  }
+
+  public function sendMessage(Request $request) {
+    $conID = $request->conID;
+    $msg = $request->msg;
+    $fetch_userTo = DB::table('messages')->where('conversation_id', $conID)
+    ->where('user_to', '!=', Auth::user()->id)
+    ->get();
+    $userTo = $fetch_userTo[0]->user_to;
+
+    $sendMsg = DB::table('messages')->insert([
+'user_to' => $userTo,
+'user_from' => Auth::user()->id,
+'msg' => $msg,
+'status' => 1,
+'conversation_id' => $conID
+]);
+if ($sendMsg) {
+  $userMsg = DB::table('messages')
+  ->join('users', 'users.id', 'messages.user_from')
+  ->where('messages.conversation_id',$conID)->get();
+  return $userMsg;
+}
   }
 
 }

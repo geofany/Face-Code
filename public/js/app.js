@@ -44701,6 +44701,9 @@ var app = new Vue({
     axios.get('http://localhost:8000/posts').then(function (response) {
       console.log(response);
       _this.posts = response.data;
+      Vue.filter('myOwnTime', function (value) {
+        return moment(value).fromNow();
+      });
     })["catch"](function (error) {
       console.log(error);
     });

@@ -33,6 +33,9 @@ const app = new Vue({
     .then(response => {
       console.log(response);
       this.posts = response.data;
+      Vue.filter('myOwnTime', function(value){
+        return moment(value).fromNow();
+      });
 
     })
     .catch(function (error) {
@@ -58,19 +61,19 @@ const app = new Vue({
         console.log(error);
       });
     },
-deletePost(id){
-  axios.get('http://localhost:8000/deletePost/' + id)
-  .then(response => {
-    console.log(response);
-    this.posts = response.data;
+    deletePost(id){
+      axios.get('http://localhost:8000/deletePost/' + id)
+      .then(response => {
+        console.log(response);
+        this.posts = response.data;
 
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
 
-}
+  }
 
 
 

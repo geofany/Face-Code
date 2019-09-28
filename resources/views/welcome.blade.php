@@ -14,83 +14,86 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <style>
-  html, body {
-    background-color: #ddd;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    margin: 0;
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-  }
-  a {
-    color:black;
-  }
-  .top_bar{
-    position:relative; width:99%; top:0; padding:5px; margin:0 5
-  }
-  .full-height {
-    margin-top:50px
-  }
-  .flex-center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-  .position-ref {
-    position: relative;
-  }
-  .top-right {
-    position: absolute;
-    right:5px;
-    top:18px
-  }
-  /* .top-left {
+</script>
+<style>
+html, body {
+  background-color: #ddd;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  margin: 0;
+
+}
+a {
+  color:black;
+}
+.top_bar{
+  position:relative; width:99%; top:0; padding:5px; margin:0 5
+}
+.full-height {
+  margin-top:50px
+}
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.position-ref {
+  position: relative;
+}
+.top-right {
   position: absolute;
-  } */
-  .content {
-    text-align: center;
-  }
-  .title {
-    font-size: 84px;
-  }
-  .links > a {
-    color: #636b6f;
-    padding: 0 25px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .1rem;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .m-b-md {
-    margin-bottom: 30px0;
-  }
-  .head_har{
-    background-color: #f6f7f9;
-    border-bottom: 1px solid #dddfe2;
-    border-radius: 2px 2px 0 0;
-    font-weight: bold;
-    padding: 8px 6px;
+  right:5px;
+  top:18px
+}
+/* .top-left {
+position: absolute;
+} */
+.content {
+  text-align: center;
+}
+.title {
+  font-size: 84px;
+}
+.links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.m-b-md {
+  margin-bottom: 30px0;
+}
+.head_har{
+  background-color: #f6f7f9;
+  border-bottom: 1px solid #dddfe2;
+  border-radius: 2px 2px 0 0;
+  font-weight: bold;
+  padding: 8px 6px;
 
-  }
-  .left-sidebar, .right-sidebar{
-    background-color:#fff;
-    min-height:600px;
+}
+.left-sidebar, .right-sidebar{
+  background-color:#fff;
+  min-height:600px;
 
-  }
-  .posts_div{
-    margin-bottom:10px !important;
-  }
-  .posts_div h3{
-    margin-top:4px !important;
+}
+.posts_div{
+  margin-bottom:10px !important;
+}
+.posts_div h3{
+  margin-top:4px !important;
 
-  }
-  #postText{
-    border:none;
-    height:120px
-  }
-  /* .likeBtn{
-  color: #4b4f56; font-weight:bold; cursor: pointer;
+}
+#postText{
+  border:none;
+  height:120px
+}
+/* .likeBtn{
+color: #4b4f56; font-weight:bold; cursor: pointer;
 }
 .left-sidebar li {
 padding:10px;
@@ -255,67 +258,66 @@ overflow-y: scroll;
                 </div>
                 @endif
                 <div class="posts_div">
-                  <div class="head_har">
-                    Posts
-                  </div>
                   <div v-for="post in posts">
-                    <div class="col-md-12" style="background-color:#fff">
-                      <div class="col-md-2 pull-left">
-                        <img :src="post.pic" style="width:70px; margin:50px;">
+                    <div class="col-md-12" style="background-color:#fff; margin-top:10px; padding-top:5px">
+                      <div class="col-md-1 pull-left">
+                        <img :src="post.pic" style="width:60px;">
                       </div>
-
-                      <div class="col-md-10">
+                      <div class="col-md-11">
                         <div class="row">
-                          <div class="col-md-9">
-                            <h3>@{{post.name}}</h3>
-                          </div>
-                          <div class="col-md-3" style="text-align:right">
-                            @if(Auth::check())
-                            <a href="#" data-toggle="dropdown" aria-haspopup="True">v</a>
-
-                            <div class="dropdown-menu">
-                              <li><a href="#">Some Action Here</a></li>
-                              <li><a href="#">Some Action Here</a></li>
-                              <hr style="margin:0">
-                              <li v-if="post.user_id == '{{Auth::user()->id}}'">
-
-                                <a @click="deletePost(post.id)">
-                                  <i class="fa fa-trash"></i> Delete
+                          <div class="col-md-11">
+                            <p><a :href="'/profile/'+ post.slug" class="user_name">@{{post.name}}</a><br>
+                              <span style="color:#AAADB3">@{{post.created_at | myOwnTime}}
+                                <i class="fa fa-globe"></i></span></p>
+                              </div>
+                              <div class="col-md-1 pull-right" style="text-align:right">
+                                @if(Auth::check())
+                                <a href="#" data-toggle="dropdown" aria-haspopup="True">
+                                  <img src="/img/settings.png" width="20">
                                 </a>
-                              </li>
 
+                                <div class="dropdown-menu">
+                                  <li><a href="#">Some Action Here</a></li>
+                                  <li><a href="#">Some Action Here</a></li>
+                                  <hr style="margin:0">
+                                  <li v-if="post.user_id == '{{Auth::user()->id}}'">
+
+                                    <a @click="deletePost(post.id)">
+                                      <i class="fa fa-trash"></i> Delete
+                                    </a>
+                                  </li>
+
+                                </div>
+                                @endif
+
+                              </div>
                             </div>
-                            @endif
 
                           </div>
+                          <p class="col-md-12" style="color:#333;">@{{post.content}}</p>
+                          <hr style="width:100%">
                         </div>
-
-                        <p><i class="fa fa-globe"></i> @{{post.city}} | @{{post.country}}</p>
-                        <small>@{{post.created_at}}</small>
                       </div>
-                      <p class="col-md-12" style="color:#333;">@{{post.content}}</p>
                     </div>
+                  </div>
+                  <div class="col-md-3 right-sidebar">
+                    <h3 align="center">Right Sidebar</h3>
+                    <hr>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3 right-sidebar">
-                <h3 align="center">Right Sidebar</h3>
-                <hr>
-              </div>
-            </div>
-          </div>
-          <script src="{{ asset('js/app.js') }}" defer>
-          </script>
-          <!-- <script>
-          $(document).ready(function(){
+              <script src="{{ asset('js/app.js') }}" defer>
+              </script>
+              <!-- <script>
+              $(document).ready(function(){
 
-          $('#postBtn').hide();
+              $('#postBtn').hide();
 
-          $("#postText").hover(function() {
-          $('#postBtn').show();
-        });
+              $("#postText").hover(function() {
+              $('#postBtn').show();
+            });
 
-      });
-    </script> -->
-  </body>
-  </html>
+          });
+        </script> -->
+      </body>
+      </html>

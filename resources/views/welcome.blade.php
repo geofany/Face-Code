@@ -270,6 +270,7 @@ overflow-y: scroll;
                             <h3>@{{post.name}}</h3>
                           </div>
                           <div class="col-md-3" style="text-align:right">
+                            @if(Auth::check())
                             <a href="#" data-toggle="dropdown" aria-haspopup="True">v</a>
 
                             <div class="dropdown-menu">
@@ -284,6 +285,7 @@ overflow-y: scroll;
                               </li>
 
                             </div>
+                            @endif
 
                           </div>
                         </div>
@@ -309,11 +311,11 @@ overflow-y: scroll;
 
           $('#postBtn').hide();
 
-            $("#postText").hover(function() {
-            $('#postBtn').show();
-           });
+          $("#postText").hover(function() {
+          $('#postBtn').show();
+        });
 
-          });
-          </script> -->
-        </body>
-        </html>
+      });
+    </script> -->
+  </body>
+  </html>

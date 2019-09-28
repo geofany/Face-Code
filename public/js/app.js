@@ -44673,16 +44673,16 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+* First we will load all of this project's JavaScript dependencies which
+* includes Vue and other libraries. It is a great starting point when
+* building robust, powerful web applications using Vue and Laravel.
+*/
 __webpack_require__(/*! ./bootstrap */ "./resources/assets/js/bootstrap.js");
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+* Next, we will create a fresh Vue application instance and attach it to
+* the page. Then, you may begin adding components to this application
+* or customize the JavaScript scaffolding to fit your unique needs.
+*/
 
 
 var app = new Vue({
@@ -44717,6 +44717,16 @@ var app = new Vue({
           // alert('Added');
           app.posts = response.data;
         }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    deletePost: function deletePost(id) {
+      var _this2 = this;
+
+      axios.get('http://localhost:8000/deletePost' + id).then(function (response) {
+        console.log(response);
+        _this2.posts = response.data;
       })["catch"](function (error) {
         console.log(error);
       });

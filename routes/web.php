@@ -1,4 +1,17 @@
 <?php
+// Route::get('forgotPassword', function() {
+// return view('profile.forgotPassword');
+//
+// });
+
+Route::post('setToken', 'ProfileController@setToken');
+
+Route::get('/reset/{token}', function($token) {
+
+echo $token;
+
+});
+
 
 Route::get('/messages', function() {
 return view('messages');
@@ -37,26 +50,23 @@ return $userMsg;
 
 
 Route::get('/', function () {
-	$posts = DB::table('posts')
-->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
-->leftJoin('users', 'users.id', 'posts.user_id')
-->orderBy('posts.id', 'Desc')
-->take(4)
-->get();
-	return view('welcome', compact('posts'));
+	return view('welcome');
 });
 
 Route::get('/posts', function () {
 	$posts_json = DB::table('posts')
-->leftJoin('profiles', 'profiles.user_id', 'posts.user_id')
-->leftJoin('users', 'users.id', 'posts.user_id')
+->join('profiles', 'posts.user_id', '=', 'profiles.user_id')
+->leftJoin('users', 'profiles.user_id', '=', 'users.id')
 ->orderBy('posts.id', 'Desc')
 ->take(4)
+->select('posts.id as id_post', 'posts.*', 'users.*', 'profiles.*')
 ->get();
-	return $posts_json;
+return $posts_json;
 });
 
 Route::post('addPost', 'PostsController@addPost');
+
+Route::get('/deletePost', 'PostsController@deletePost');
 
 Auth::routes();
 

@@ -20,6 +20,10 @@
     font-family: 'Raleway', sans-serif;
     font-weight: 100;
     margin: 0;
+
+  }
+  a {
+    color:black;
   }
   .top_bar{
     position:relative; width:99%; top:0; padding:5px; margin:0 5
@@ -172,76 +176,141 @@ overflow-y: scroll;
     @if (Route::has('login'))
     <div class="top-right links" style="position:fixed;">
       @if (Auth::check())
-      <a href="{{ url('/home') }}">Dashboard</a>
-      @else
-      <a href="{{ url('/login') }}">Login</a>
-      <a href="{{ url('/register') }}">Register</a>
-      @endif
-    </div>
+      <a href="{{ url('/home') }}">Dashboard (<b style="color:green;">{{Auth::user()->name}}</b>)</a>
+      <a href="{{ route('logout') }}"
+      onclick="event.preventDefault();
+      document.getElementById('logout-form').submit();">
+      Logout
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+      {{ csrf_field() }}
+    </form>
+    @else
+    <a href="{{ url('/login') }}">Login</a>
+    <a href="{{ url('/register') }}">Register</a>
     @endif
-
-    <div class="col-md-12" id="app">
-      <div class="col-md-2 left-sidebar">
-        <h3 align="center">Left Sidebar</h3>
-        <hr>
-      </div>
-      <div class="col-md-7 center-con">
-        @if(Auth::check())
-        <div class="posts_div">
-          <div class="head_har">
-            @{{msg}}
-          </div>
-          <div style="background-color:#fff;">
-            <div class="row">
-              <div class="col-md-1 pull-left">
-                <img src="{{Auth::user()->pic}}" style="width:50px; margin:10px" class="img-rounded">
-              </div>
-              <div class="col-md-11 pull-right">
-                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
-                  <textarea v-model="content" id="postText" class="form-control" placeholder="What's on your mind ?"></textarea>
-                  <button type="submit" class="btn btn-sm btn-info pull-right" style="margin:10px" id="postBtn">Post</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endif
-        <div class="posts_div">
-          <div class="head_har">
-            Posts
-          </div>
-          <div v-for="post in posts">
-            <div class="col-md-12" style="background-color:#fff">
-              <div class="col-md-2 pull-left">
-                <img :src="post.pic" style="width:70px; margin:50px;">
-              </div>
-
-              <div class="col-md-10">
-                <h3>@{{post.name}}</h3>
-                <p><i class="fa fa-globe"></i> @{{post.city}} | @{{post.country}}</p>
-                <small>@{{post.created_at}}</small>
-              </div>
-              <p class="col-md-12" style="color:#333;">@{{post.content}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 right-sidebar">
-        <h3 align="center">Right Sidebar</h3>
-        <hr>
-      </div>
-    </div>
   </div>
-  <script src="{{ asset('js/app.js') }}" defer>
-  </script>
-  <script>
-  $(document).ready(function() {
-    $('#postBtn').hide();
-    $('#postText').hover(function() {
-      $('#postBtn').show();
-      $('#postText').animate({'zoom': currentZoom += .5}, 'slow');
-    });
-  });
-  </script>
-</body>
-</html>
+  @endif
+
+  <div class="col-md-12" id="app">
+    <div class="col-md-2 left-sidebar">
+      <h3 align="center">Left Sidebar</h3>
+      <hr>
+      @if(Auth::check())
+      <ul>
+        <li style="list-style-type:none;">
+          <a href="{{ url('/profile') }}/{{Auth::user()->slug}}">
+            <img src="{{Auth::user()->pic}}"
+            width="32" style="margin:5px"  />
+            {{Auth::user()->name}}</a>
+          </li>
+          <hr style="margin:0;">
+          <li style="list-style-type:none;">
+            <a href="{{url('/')}}"> <img src="/img/news_feed.png"
+              width="32" style="margin:5px"  />
+              News Feed</a>
+            </li>
+            <hr style="margin:0">
+            <li style="list-style-type:none;">
+              <a href="{{url('/friends')}}"> <img src="/img/friends.png"
+                width="32" style="margin:5px"  />
+                Friends </a>
+              </li>
+              <hr style="margin:0">
+              <li style="list-style-type:none;">
+                <a href="{{url('/messages')}}"> <img src="/img/msg.png"
+                  width="32" style="margin:5px"  />
+                  Messages</a>
+                </li>
+                <hr style="margin:0">
+                <li style="list-style-type:none;">
+                  <a href="{{url('/findFriends')}}"> <img src="/img/friends.png"
+                    width="32" style="margin:5px"  />
+                    Find Friends</a>
+                  </li>
+                </ul>
+                @endif
+                <hr>
+              </div>
+              <div class="col-md-7 center-con">
+                @if(Auth::check())
+                <div class="posts_div">
+                  <div class="head_har">
+                    @{{msg}}
+                  </div>
+                  <div style="background-color:#fff;">
+                    <div class="row">
+                      <div class="col-md-1 pull-left">
+                        <img src="{{Auth::user()->pic}}" style="width:50px; margin:10px" class="img-rounded">
+                      </div>
+                      <div class="col-md-11 pull-right">
+                        <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                          <textarea v-model="content" id="postText" class="form-control" placeholder="What's on your mind ?"></textarea>
+                          <button type="submit" class="btn btn-sm btn-info pull-right" style="margin:10px" id="postBtn">Post</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                @endif
+                <div class="posts_div">
+                  <div class="head_har">
+                    Posts
+                  </div>
+                  <div v-for="post in posts">
+                    <div class="col-md-12" style="background-color:#fff">
+                      <div class="col-md-2 pull-left">
+                        <img :src="post.pic" style="width:70px; margin:50px;">
+                      </div>
+
+                      <div class="col-md-10">
+                        <div class="row">
+                          <div class="col-md-9">
+                            <h3>@{{post.name}}</h3>
+                          </div>
+                          <div class="col-md-3" style="text-align:right">
+                            <a href="#" data-toggle="dropdown" aria-haspopup="True">v</a>
+
+                            <div class="dropdown-menu">
+                              <li><a href="#">Some Action Here</a></li>
+                              <li><a href="#">Some Action Here</a></li>
+                              <hr style="margin:0">
+                              <li v-if="post.user_id == '{{Auth::user()->id}}'">
+                                <a @click="deletePost(post.id_post)">
+                                  <i class="fa fa-trash"></i> Delete
+                                </a>
+                              </li>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <p><i class="fa fa-globe"></i> @{{post.city}} | @{{post.country}}</p>
+                        <small>@{{post.created_at}}</small>
+                      </div>
+                      <p class="col-md-12" style="color:#333;">@{{post.content}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 right-sidebar">
+                <h3 align="center">Right Sidebar</h3>
+                <hr>
+              </div>
+            </div>
+          </div>
+          <script src="{{ asset('js/app.js') }}" defer>
+          </script>
+          <script>
+          $(document).ready(function() {
+            $('#postBtn').hide();
+            $('#postText').hover(function() {
+              $('#postBtn').show();
+              $('#postText').animate({'zoom': currentZoom += .5}, 'slow');
+            });
+          });
+          </script>
+        </body>
+        </html>

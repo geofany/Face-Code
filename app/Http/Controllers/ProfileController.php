@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\friendships;
 use App\notifications;
+use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPassword;
 
 class ProfileController extends Controller
 {
@@ -217,6 +220,22 @@ $conID_new = DB::table('conversation')->insertGetId([
     'status' => 1
     ]);
 }
+}
+
+public function setToken(Request $request) {
+
+$email = $request->email_address;
+//check email exist
+
+$userInfo = DB::table('users')->where('email', $email)->get()->first();
+if (!isset($userInfo->email)) {
+  echo "Wrong Email Address";
+} else {
+  $resetLink = DB::table('password_resets')->where('email', $email)->get()->first();
+  Mail::to($email)->send(new ResetPassword($userInfo->name, $resetLink->token));
+
+}
+
 }
 
 }

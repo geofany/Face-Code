@@ -12,8 +12,6 @@
       </div>
     </div>
 
-
-
     <div v-for="privateMsgs in privateMsgs">
       <li @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
         <div class="col-md-3 pull-left">
@@ -29,7 +27,7 @@
   </div>
 
 
-  <div class="col-md-6 msg_main">
+  <div class="col-md-6 msg_main" style="background-color:#fff; border-left:5px solid #F5F8FA;">
     <h3 align="center">Messages</h3>
     <p class="alert alert-success">@{{msg}}</p>
     <div  v-if="seen">
@@ -39,7 +37,7 @@
     </div>
   </div>
 
-  <div class="col-md-3 pull-right msg_right">
+  <div class="col-md-3 pull-right msg_right" style="background-color:#fff; border-left:5px solid #F5F8FA;">
     <h3 align="center">User Information</h3>
     <hr>
   </div>

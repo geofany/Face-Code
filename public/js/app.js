@@ -44733,6 +44733,16 @@ var app = new Vue({
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    likePost: function likePost(id) {
+      var _this3 = this;
+
+      axios.get('http://localhost:8000/likePost/' + id).then(function (response) {
+        console.log(response);
+        _this3.posts = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });

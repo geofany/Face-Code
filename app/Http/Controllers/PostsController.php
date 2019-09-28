@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\post;
 
 class PostsController extends Controller
 {
@@ -25,12 +26,7 @@ class PostsController extends Controller
     'updated_at' => date("Y-m-d H:i:s")]);
 
     if ($createPost) {
-      $posts_json = DB::table('users')
-      ->rightJoin('profiles', 'profiles.user_id', 'users.id')
-      ->rightJoin('posts', 'posts.user_id', 'users.id')
-      ->orderBy('posts.id', 'Desc')
-      ->get();
-      return $posts_json;
+    return post::with('user')->orderBy('created_at', 'DESC')->get();
     }
 
   }
@@ -38,14 +34,22 @@ class PostsController extends Controller
   public function deletePost($id) {
     $deletePost = DB::table('posts')->where('id', $id)->delete();
     if ($deletePost) {
-      $posts_json = DB::table('users')
-      ->rightJoin('profiles', 'profiles.user_id', 'users.id')
-      ->rightJoin('posts', 'posts.user_id', 'users.id')
-      ->orderBy('posts.id', 'Desc')
-      ->get();
-      return $posts_json;
+      return post::with('user')->orderBy('created_at', 'DESC')->get();
     }
 
   }
+
+public function likePost($id){
+
+$likePost = DB::table('likes')->insert([
+'posts_id' => $id,
+'user_id' => Auth::user()->id
+]);
+
+if ($likePost) {
+  return post::with('user')->orderBy('created_at', 'DESC')->get();
+}
+
+}
 
 }

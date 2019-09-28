@@ -71,7 +71,18 @@ const app = new Vue({
       .catch(function (error) {
         console.log(error);
       });
-    }
+    },
+likePost(id){
+  axios.get('http://localhost:8000/likePost/' + id)
+  .then(response => {
+    console.log(response);
+    this.posts = response.data;
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 
   }
 

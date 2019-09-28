@@ -50,21 +50,27 @@ Route::get('/getMessages/{id}', function($id) {
 
 
 Route::get('/', function () {
-	return view('welcome');
+	// return view('welcome');
+	$posts = App\post::with('user')->orderBy('created_at', 'DESC')->get();
+	return view('welcome', compact('posts'));
 });
 
 Route::get('/posts', function () {
-	$posts_json = DB::table('users')
-	->rightJoin('profiles', 'profiles.user_id', 'users.id')
-	->rightJoin('posts', 'posts.user_id', 'users.id')
-	->orderBy('posts.id', 'Desc')
-	->get();
-	return $posts_json;
+	// $posts_json = DB::table('users')
+	// ->rightJoin('profiles', 'profiles.user_id', 'users.id')
+	// ->rightJoin('posts', 'posts.user_id', 'users.id')
+	// ->orderBy('posts.id', 'Desc')
+	// ->get();
+	// return $posts_json;
+
+	return App\post::with('user')->orderBy('created_at', 'DESC')->get();
 });
 
 Route::post('addPost', 'PostsController@addPost');
 
 Route::get('/deletePost/{id}', 'PostsController@deletePost');
+
+Route::get('/likePost/{id}', 'PostsController@likePost');
 
 Auth::routes();
 

@@ -182,60 +182,60 @@ class ProfileController extends Controller
   }
 
   public function sendNewMessage(Request $request) {
- $msg = $request->msg;
- $friend_id = $request->friend_id;
-  $myID = Auth::user()->id;
+    $msg = $request->msg;
+    $friend_id = $request->friend_id;
+    $myID = Auth::user()->id;
 
-  $checkCon1 = DB::table('conversation')->where('user_one', $myID)
-  ->where('user_two', $friend_id)->get();
+    $checkCon1 = DB::table('conversation')->where('user_one', $myID)
+    ->where('user_two', $friend_id)->get();
 
-  $checkCon1 = DB::table('conversation')->where('user_two', $myID)
-  ->where('user_one', $friend_id)->get();
+    $checkCon1 = DB::table('conversation')->where('user_two', $myID)
+    ->where('user_one', $friend_id)->get();
 
-  $allCons = array_merge($checkCon1->toArray(), $checkCon2->toArray());
+    $allCons = array_merge($checkCon1->toArray(), $checkCon2->toArray());
 
-  if (count($allCons)!=0) {
-    $conID_old = $allCons[0]->id;
+    if (count($allCons)!=0) {
+      $conID_old = $allCons[0]->id;
 
-    $MsgSent = DB::table('messages')->insert([
-    'user_from' => $myID,
-'user_to' => $friend_id,
-'msg' => $msg,
-'conversation_id' => $conID_old,
-'status' => 1
-]);
-  } else {
-$conID_new = DB::table('conversation')->insertGetId([
-'user_one' => $myID,
-'user_two' => $friend_id,
+      $MsgSent = DB::table('messages')->insert([
+        'user_from' => $myID,
+        'user_to' => $friend_id,
+        'msg' => $msg,
+        'conversation_id' => $conID_old,
+        'status' => 1
+      ]);
+    } else {
+      $conID_new = DB::table('conversation')->insertGetId([
+        'user_one' => $myID,
+        'user_two' => $friend_id,
 
 
-]);
+      ]);
 
-    $MsgSent = DB::table('messages')->insert([
-    'user_from' => $myID,
-    'user_to' => $friend_id,
-    'msg' => $msg,
-    'conversation_id' => $conID_new,
-    'status' => 1
-    ]);
-}
-}
+      $MsgSent = DB::table('messages')->insert([
+        'user_from' => $myID,
+        'user_to' => $friend_id,
+        'msg' => $msg,
+        'conversation_id' => $conID_new,
+        'status' => 1
+      ]);
+    }
+  }
 
-public function setToken(Request $request) {
+  public function setToken(Request $request) {
 
-$email = $request->email_address;
-//check email exist
+    $email = $request->email_address;
+    //check email exist
 
-$userInfo = DB::table('users')->where('email', $email)->get()->first();
-if (!isset($userInfo->email)) {
-  echo "Wrong Email Address";
-} else {
-  $resetLink = DB::table('password_resets')->where('email', $email)->get()->first();
-  Mail::to($email)->send(new ResetPassword($userInfo->name, $resetLink->token));
+    $userInfo = DB::table('users')->where('email', $email)->get()->first();
+    if (!isset($userInfo->email)) {
+      echo "Wrong Email Address";
+    } else {
+      $resetLink = DB::table('password_resets')->where('email', $email)->get()->first();
+      Mail::to($email)->send(new ResetPassword($userInfo->name, $resetLink->token));
 
-}
+    }
 
-}
+  }
 
 }

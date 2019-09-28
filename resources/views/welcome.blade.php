@@ -261,12 +261,12 @@ overflow-y: scroll;
                   <div v-for="post in posts">
                     <div class="col-md-12" style="background-color:#fff; margin-top:10px; padding-top:5px">
                       <div class="col-md-1 pull-left">
-                        <img :src="post.pic" style="width:60px;">
+                        <img :src="post.user.pic" style="width:60px;">
                       </div>
                       <div class="col-md-11">
                         <div class="row">
                           <div class="col-md-11">
-                            <p><a :href="'/profile/'+ post.slug" class="user_name">@{{post.name}}</a><br>
+                            <p><a :href="'/profile/'+ post.user.slug" class="user_name">@{{post.user.name}}</a><br>
                               <span style="color:#AAADB3">@{{post.created_at | myOwnTime}}
                                 <i class="fa fa-globe"></i></span></p>
                               </div>
@@ -294,8 +294,13 @@ overflow-y: scroll;
                             </div>
 
                           </div>
-                          <p class="col-md-12" style="color:#333;">@{{post.content}}</p>
-                          <hr style="width:100%">
+                          <p class="col-md-12" style="color:#000; margin-top:15px; font-family:inherit">@{{post.content}}</p>
+                          <div style="padding:10px; border-top:1px solid #ddd" class="col-md-12">
+                            <p class="likeBtn" @click="likePost(post.id)">
+                              <i class="fa fa-thumbs-up"></i> Like
+                            </p>
+
+                          </div>
                         </div>
                       </div>
                     </div>

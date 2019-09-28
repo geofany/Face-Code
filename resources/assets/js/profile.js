@@ -70,26 +70,26 @@ const app = new Vue({
       }
     },
 
-friendID: function(id){
-app.friend_id = id;
-},
-sendNewMsg(){
-  axios.post('http://localhost:8000/sendNewMessage', {
-friend_id: this.friend_id,
-msg : this.newMsgFrom,
-})
-  .then(response => {
-    console.log(response.data);
-    if (response.status===200) {
-      window.location.replace('http://localhost:8000/messages');
-      app.msg = 'your message has been sent';
-    }
+    friendID: function(id){
+      app.friend_id = id;
+    },
+    sendNewMsg(){
+      axios.post('http://localhost:8000/sendNewMessage', {
+        friend_id: this.friend_id,
+        msg : this.newMsgFrom,
+      })
+      .then(response => {
+        console.log(response.data);
+        if (response.status===200) {
+          window.location.replace('http://localhost:8000/messages');
+          app.msg = 'your message has been sent';
+        }
 
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
 
 
 

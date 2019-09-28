@@ -58,9 +58,8 @@ const app = new Vue({
         console.log(error);
       });
     },
-
 deletePost(id){
-  axios.get('http://localhost:8000/deletePost' + id)
+  axios.get('http://localhost:8000/deletePost/' + id)
   .then(response => {
     console.log(response);
     this.posts = response.data;
@@ -71,6 +70,8 @@ deletePost(id){
   });
 }
 
-  }
+}
+
+
 
 });

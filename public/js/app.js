@@ -44724,7 +44724,7 @@ var app = new Vue({
     deletePost: function deletePost(id) {
       var _this2 = this;
 
-      axios.get('http://localhost:8000/deletePost' + id).then(function (response) {
+      axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
         console.log(response);
         _this2.posts = response.data;
       })["catch"](function (error) {

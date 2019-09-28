@@ -277,7 +277,8 @@ overflow-y: scroll;
                               <li><a href="#">Some Action Here</a></li>
                               <hr style="margin:0">
                               <li v-if="post.user_id == '{{Auth::user()->id}}'">
-                                <a @click="deletePost(post.id_post)">
+
+                                <a @click="deletePost(post.id)">
                                   <i class="fa fa-trash"></i> Delete
                                 </a>
                               </li>
@@ -303,14 +304,16 @@ overflow-y: scroll;
           </div>
           <script src="{{ asset('js/app.js') }}" defer>
           </script>
-          <script>
-          $(document).ready(function() {
-            $('#postBtn').hide();
-            $('#postText').hover(function() {
-              $('#postBtn').show();
-              $('#postText').animate({'zoom': currentZoom += .5}, 'slow');
-            });
+          <!-- <script>
+          $(document).ready(function(){
+
+          $('#postBtn').hide();
+
+            $("#postText").hover(function() {
+            $('#postBtn').show();
+           });
+
           });
-          </script>
+          </script> -->
         </body>
         </html>

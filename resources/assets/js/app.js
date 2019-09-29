@@ -56,7 +56,8 @@ const app = new Vue({
       axios.post('http://localhost:8000/addPost', {
         content: this.content
       })
-      .then(function (response) {
+      .then((response) => {
+        this.content = "";
         console.log('Saved Successfully');
         if(response.status===200) {
           // alert('Added');

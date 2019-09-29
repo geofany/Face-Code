@@ -44715,10 +44715,13 @@ var app = new Vue({
   },
   methods: {
     addPost: function addPost() {
+      var _this2 = this;
+
       // alert('Test');
       axios.post('http://localhost:8000/addPost', {
         content: this.content
       }).then(function (response) {
+        _this2.content = "";
         console.log('Saved Successfully');
 
         if (response.status === 200) {
@@ -44730,21 +44733,21 @@ var app = new Vue({
       });
     },
     deletePost: function deletePost(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
         console.log(response);
-        _this2.posts = response.data;
+        _this3.posts = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     likePost: function likePost(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('http://localhost:8000/likePost/' + id).then(function (response) {
         console.log(response);
-        _this3.posts = response.data;
+        _this4.posts = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -44769,13 +44772,13 @@ var app = new Vue({
       this.createImage(files[0]);
     },
     createImage: function createImage(file) {
-      var _this4 = this;
+      var _this5 = this;
 
       var image = new Image();
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this4.image = e.target.result;
+        _this5.image = e.target.result;
       };
 
       reader.readAsDataURL(file);

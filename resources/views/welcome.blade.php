@@ -152,18 +152,19 @@ position: absolute;
 .commentHand:hover{
   cursor:pointer;
 }
-/* .upload_wrap{
-position:relative;
-display:inline-block;
-width:100%
-} */
+.upload_wrap{
+  position:relative;
+  display:inline-block;
+
+}
 /* .center-con{
 max-height:600px;
 position: absolute;
 left:calc(25%);
 overflow-y: hidden;
 } */
-/* @media (min-width: 268px) and (max-width: 768px) {
+/*
+@media (min-width: 268px) and (max-width: 768px) {
 
 .center-con{
 max-height:600px;
@@ -249,21 +250,30 @@ overflow-y: scroll;
                         <img src="{{Auth::user()->pic}}" style="width:50px; margin:10px" class="img-rounded">
                       </div>
                       <div class="col-md-11 pull-right">
-                        <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
-                          <textarea v-model="content" id="postText" class="form-control" placeholder="What's on your mind ?"></textarea>
-                          <button type="submit" class="btn btn-sm btn-info pull-right" style="margin:10px" id="postBtn">Post</button>
-                        </form>
                         <div v-if="!image">
+                          <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                            <textarea v-model="content" id="postText" class="form-control" placeholder="What's on your mind ?"></textarea>
+                            <button type="submit" class="btn btn-sm btn-info pull-right" style="margin:10px" id="postBtn">Post</button>
+                          </form>
+                        </div>
+                        <div v-if="!image" style="position:relative; display:inline-block;">
+                          <div style="border:1px solid #ddd; border-radius:10px; background-color:#efefef; padding:3px 15px 3px 10px; margin-bottom:10px"><i class="fa fa-file-image-o"></i> <b>Photo</b>
 
 
-                          <input type="file" @change="onFileChange"/>
+                            <input type="file" @change="onFileChange" style="position:absolute; left:0px; top:0px; opacity:0"/>
+                          </div>
                         </div>
                         <div v-else>
+                          <div class="upload_wrap">
 
 
-                          <img :src="image" style="width:200px"/><br>
-                          <button @click="uploadImage" class="btn btn-success">Upload</button>
-                          <button @click="removeImage" class="btn btn-warning">Remove</button>
+
+                            <img :src="image" style="width:100px; margin:10px;"/><br>
+                            <b @click="removeImage" style="top:0; right:0; position:absolute; cursor:pointer;">X</b>
+                          </div>
+                          <button @click="uploadImage" class="btn btn-sm btn-info pull-right" style="margin:10px">Post</button>
+
+
                         </div>
 
                       </div>

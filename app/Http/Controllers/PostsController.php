@@ -26,7 +26,7 @@ class PostsController extends Controller
     'updated_at' => date("Y-m-d H:i:s")]);
 
     if ($createPost) {
-    return post::with('user')->orderBy('created_at', 'DESC')->get();
+    return post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
     }
 
   }
@@ -49,6 +49,23 @@ $likePost = DB::table('likes')->insert([
 if ($likePost) {
   return post::with('user', 'likes', 'comments' )->orderBy('created_at', 'DESC')->get();
 }
+
+}
+
+public function addComment(Request $request) {
+
+  $comment = $request->comment;
+$id = $request->id;
+
+  $createComment = DB::table('comments')
+  ->insert(['comment' => $comment,
+  'user_id' => Auth::user()->id, 'posts_id'=>$id,
+  'created_at' => date("Y-m-d H:i:s"),
+  ]);
+
+  if ($createComment) {
+  return post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
+  }
 
 }
 

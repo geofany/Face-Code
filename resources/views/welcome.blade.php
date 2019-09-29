@@ -93,64 +93,64 @@ position: absolute;
   height:120px
 }
 #commentBox{
-background-color:#ddd;
-padding:10px;
-width:99%; margin:0 auto;
-background-color:#F6F7F9;
-padding:10px;
-margin-bottom:10px
+  background-color:#ddd;
+  padding:10px;
+  width:99%; margin:0 auto;
+  background-color:#F6F7F9;
+  padding:10px;
+  margin-bottom:10px
 }
 #commentBox li {
-list-style:none;
-padding:10px;
-border-bottom:1px solid #ddd
+  list-style:none;
+  padding:10px;
+  border-bottom:1px solid #ddd
 }
 .likeBtn{
-color: #4b4f56; font-weight:bold; cursor: pointer;
+  color: #4b4f56; font-weight:bold; cursor: pointer;
 }
 .left-sidebar li {
-padding:10px;
-border-bottom:1px solid #ddd;
-list-style:none; margin-left:-20px
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  list-style:none; margin-left:-20px
 }
 .dropdown-menu{
-min-width:120px; left:-30px
+  min-width:120px; left:-30px
 }
 .dropdown-menu a{
-cursor: pointer;
+  cursor: pointer;
 }
 .dropdown-divider {
-height: 1px;
-margin: .5rem 0;
-overflow: hidden;
-background-color: #eceeef;
+  height: 1px;
+  margin: .5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
 }
 .user_name {
-font-size:18px;
-font-weight:bold;
-text-transform:capitalize;
-margin:3px
+  font-size:18px;
+  font-weight:bold;
+  text-transform:capitalize;
+  margin:3px
 }
 .all_posts{
-background-color:#fff;
-padding:5px;
-margin-bottom:15px;
-border-radius:5px;
--webkit-box-shadow: 0 8px 6px -6px #666;
--moz-box-shadow: 0 8px 6px -6px #666;
-box-shadow: 0 8px 6px -6px #666;
+  background-color:#fff;
+  padding:5px;
+  margin-bottom:15px;
+  border-radius:5px;
+  -webkit-box-shadow: 0 8px 6px -6px #666;
+  -moz-box-shadow: 0 8px 6px -6px #666;
+  box-shadow: 0 8px 6px -6px #666;
 }
 
 
 .comment_form{
-padding:10px;
-margin-bottom:10px;
+  padding:10px;
+  margin-bottom:10px;
 }
 .commentHand{
-color:blue;
+  color:blue;
 }
 .commentHand:hover{
-cursor:pointer;
+  cursor:pointer;
 }
 /* .upload_wrap{
 position:relative;
@@ -317,11 +317,11 @@ overflow-y: scroll;
                           </div>
                         </div>
                         <div id="commentBox">
-<div class="comment_form">
-<textarea class="form-control"></textarea>
-<button class="btn btn-success">Send</button>
+                          <div class="comment_form">
+                            <textarea class="form-control" v-model="commentData"></textarea>
+                            <button class="btn btn-success" @click="addComment(post.id)">Send</button>
 
-</div>
+                          </div>
                           <ul v-for="comment in post.comments">
                             <li>@{{comment.comment}}</li>
                           </ul>

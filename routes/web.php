@@ -134,6 +134,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	});
 
+	Route::post('addComment', 'PostsController@addComment');
+
 
 });
 

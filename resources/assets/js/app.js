@@ -21,6 +21,9 @@ const app = new Vue({
     content: '',
     posts:[],
     likes:[],
+    postId:"",
+    successMsg:"",
+    commentData:"",
   },
 
   ready: function() {
@@ -47,7 +50,6 @@ const app = new Vue({
     .then(response => {
       console.log(response);
       this.likes = response.data;
-
     })
     .catch(function (error) {
       console.log(error);
@@ -83,17 +85,35 @@ const app = new Vue({
         console.log(error);
       });
     },
-likePost(id){
-  axios.get('http://localhost:8000/likePost/' + id)
-  .then(response => {
-    console.log(response);
-    this.posts = response.data;
+    likePost(id){
+      axios.get('http://localhost:8000/likePost/' + id)
+      .then(response => {
+        console.log(response);
+        this.posts = response.data;
 
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    addComment(id){
+
+      axios.post('http://localhost:8000/addComment', {
+        comment: this.commentData,
+        id: id
+      })
+      .then(function (response) {
+        console.log('Saved Successfully');
+        if(response.status===200) {
+          // alert('Added');
+          app.posts = response.data;
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
 
   }
 

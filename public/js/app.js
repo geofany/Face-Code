@@ -44691,7 +44691,10 @@ var app = new Vue({
     msg: "Update New Posts :",
     content: '',
     posts: [],
-    likes: []
+    likes: [],
+    postId: "",
+    successMsg: "",
+    commentData: ""
   },
   ready: function ready() {
     this.created();
@@ -44747,6 +44750,21 @@ var app = new Vue({
       axios.get('http://localhost:8000/likePost/' + id).then(function (response) {
         console.log(response);
         _this3.posts = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    addComment: function addComment(id) {
+      axios.post('http://localhost:8000/addComment', {
+        comment: this.commentData,
+        id: id
+      }).then(function (response) {
+        console.log('Saved Successfully');
+
+        if (response.status === 200) {
+          // alert('Added');
+          app.posts = response.data;
+        }
       })["catch"](function (error) {
         console.log(error);
       });

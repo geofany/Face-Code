@@ -34,7 +34,7 @@ class PostsController extends Controller
   public function deletePost($id) {
     $deletePost = DB::table('posts')->where('id', $id)->delete();
     if ($deletePost) {
-      return post::with('user')->orderBy('created_at', 'DESC')->get();
+      return post::with('user', 'likes')->orderBy('created_at', 'DESC')->get();
     }
 
   }
@@ -47,7 +47,7 @@ $likePost = DB::table('likes')->insert([
 ]);
 
 if ($likePost) {
-  return post::with('user')->orderBy('created_at', 'DESC')->get();
+  return post::with('user', 'likes' )->orderBy('created_at', 'DESC')->get();
 }
 
 }

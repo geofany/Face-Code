@@ -234,7 +234,6 @@ overflow-y: scroll;
                   </li>
                 </ul>
                 @endif
-                <hr>
               </div>
               <div class="col-md-7 center-con">
                 @if(Auth::check())
@@ -296,33 +295,49 @@ overflow-y: scroll;
                           </div>
                           <p class="col-md-12" style="color:#000; margin-top:15px; font-family:inherit">@{{post.content}}</p>
                           <div style="padding:10px; border-top:1px solid #ddd" class="col-md-12">
-                            <p class="likeBtn" @click="likePost(post.id)">
-                              <i class="fa fa-thumbs-up"></i> Like
-                            </p>
+                            @if(Auth::check())
+                            <!-- <div v-for="like in likes">
+                            <div v-if="post.id == like.posts_id && like.user_id == '{{Auth::user()->id}}'">
 
-                          </div>
+
+                            <p class="likeBtn" @click="likePost(post.id)">
+                            <i class="fa fa-thumbs-up"></i> Liked by you
+                          </p>
                         </div>
-                      </div>
+
+                      </div> -->
+                      <p v-if="post.likes.length != 0" style="color:blue">
+                      <i class="fa fa-thumbs-up"></i>
+                      liked by <b style="color:green;">@{{post.likes.length}} </b>persons
+                      </p>
+                        <p v-else class="likeBtn" @click="likePost(post.id)">
+                          no one like <br>
+                        <i class="fa fa-thumbs-up"></i> Like
+                        </p>
+                      @endif
                     </div>
-                  </div>
-                  <div class="col-md-3 right-sidebar">
-                    <h3 align="center">Right Sidebar</h3>
-                    <hr>
                   </div>
                 </div>
               </div>
-              <script src="{{ asset('js/app.js') }}" defer>
-              </script>
-              <!-- <script>
-              $(document).ready(function(){
+            </div>
+            <div class="col-md-3 right-sidebar">
+              <h3 align="center">Right Sidebar</h3>
+              <hr>
+            </div>
+          </div>
+        </div>
+        <script src="{{ asset('js/app.js') }}" defer>
+        </script>
+        <!-- <script>
+        $(document).ready(function(){
 
-              $('#postBtn').hide();
+        $('#postBtn').hide();
 
-              $("#postText").hover(function() {
-              $('#postBtn').show();
-            });
+        $("#postText").hover(function() {
+        $('#postBtn').show();
+      });
 
-          });
-        </script> -->
-      </body>
-      </html>
+    });
+  </script> -->
+</body>
+</html>

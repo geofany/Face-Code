@@ -44690,7 +44690,8 @@ var app = new Vue({
   data: {
     msg: "Update New Posts :",
     content: '',
-    posts: []
+    posts: [],
+    likes: []
   },
   ready: function ready() {
     this.created();
@@ -44704,6 +44705,12 @@ var app = new Vue({
       Vue.filter('myOwnTime', function (value) {
         return moment(value).fromNow();
       });
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    axios.get('http://localhost:8000/likes').then(function (response) {
+      console.log(response);
+      _this.likes = response.data;
     })["catch"](function (error) {
       console.log(error);
     });

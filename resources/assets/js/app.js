@@ -20,6 +20,7 @@ const app = new Vue({
     msg: "Update New Posts :",
     content: '',
     posts:[],
+    likes:[],
   },
 
   ready: function() {
@@ -36,6 +37,16 @@ const app = new Vue({
       Vue.filter('myOwnTime', function(value){
         return moment(value).fromNow();
       });
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    axios.get('http://localhost:8000/likes')
+    .then(response => {
+      console.log(response);
+      this.likes = response.data;
 
     })
     .catch(function (error) {

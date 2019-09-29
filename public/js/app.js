@@ -44694,7 +44694,8 @@ var app = new Vue({
     postId: "",
     successMsg: "",
     commentData: {},
-    commentSeen: false
+    commentSeen: false,
+    image: ''
   },
   ready: function ready() {
     this.created();
@@ -44710,15 +44711,7 @@ var app = new Vue({
       });
     })["catch"](function (error) {
       console.log(error);
-    }); //
-    // axios.get('http://localhost:8000/likes')
-    // .then(response => {
-    //   console.log(response);
-    //   this.likes = response.data;
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+    });
   },
   methods: {
     addPost: function addPost() {
@@ -44770,6 +44763,28 @@ var app = new Vue({
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var _this4 = this;
+
+      var image = new Image();
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this4.image = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    uploadImage: function uploadImage() {
+      alert(this.image);
+    },
+    removeImage: function removeImage() {
+      this.image = "";
     }
   }
 });

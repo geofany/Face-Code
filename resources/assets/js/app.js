@@ -24,6 +24,7 @@ const app = new Vue({
     successMsg:"",
     commentData:{},
     commentSeen: false,
+    image:'',
 
   },
 
@@ -46,15 +47,6 @@ const app = new Vue({
     .catch(function (error) {
       console.log(error);
     });
-    //
-    // axios.get('http://localhost:8000/likes')
-    // .then(response => {
-    //   console.log(response);
-    //   this.likes = response.data;
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   },
 
 
@@ -115,6 +107,35 @@ const app = new Vue({
         console.log(error);
       });
     },
+
+    onFileChange(e){
+
+      var files = e.target.files || e.dataTransfer.files;
+      this.createImage(files[0]);
+
+    },
+
+    createImage(file){
+
+      var image = new Image;
+      var reader = new FileReader;
+
+      reader.onload = (e) => {
+        this.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+    },
+
+    uploadImage(){
+
+      alert(this.image);
+
+    },
+
+removeImage(){
+this.image="";
+}
 
   }
 

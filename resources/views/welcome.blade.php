@@ -253,6 +253,19 @@ overflow-y: scroll;
                           <textarea v-model="content" id="postText" class="form-control" placeholder="What's on your mind ?"></textarea>
                           <button type="submit" class="btn btn-sm btn-info pull-right" style="margin:10px" id="postBtn">Post</button>
                         </form>
+                        <div v-if="!image">
+
+
+                          <input type="file" @change="onFileChange"/>
+                        </div>
+                        <div v-else>
+
+
+                          <img :src="image" style="width:200px"/><br>
+                          <button @click="uploadImage" class="btn btn-success">Upload</button>
+                          <button @click="removeImage" class="btn btn-warning">Remove</button>
+                        </div>
+
                       </div>
                     </div>
                   </div>

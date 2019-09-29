@@ -3,8 +3,9 @@
 // return view('profile.forgotPassword');
 //
 // });
+
 Route::get('try', function() {
-return App\post::with('user', 'likes')->get();
+return App\post::with('user', 'likes', 'comments')->get();
 
 });
 Route::post('setToken', 'ProfileController@setToken');
@@ -54,7 +55,7 @@ Route::get('/getMessages/{id}', function($id) {
 
 Route::get('/', function () {
 	// return view('welcome');
-	$posts = App\post::with('user', 'likes')->orderBy('created_at', 'DESC')->get();
+	$posts = App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
 	return view('welcome', compact('posts'));
 });
 
@@ -66,7 +67,7 @@ Route::get('/posts', function () {
 	// ->get();
 	// return $posts_json;
 
-	return App\post::with('user', 'likes')->orderBy('created_at', 'DESC')->get();
+	return App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
 });
 
 Route::post('addPost', 'PostsController@addPost');

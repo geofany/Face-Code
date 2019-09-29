@@ -129,7 +129,15 @@ const app = new Vue({
 
     uploadImage(){
 
-      alert(this.image);
+      axios.post('http://localhost:8000/saveImage', {
+        image: this.image
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     },
 

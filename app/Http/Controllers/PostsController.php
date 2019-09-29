@@ -69,4 +69,29 @@ $id = $request->id;
 
 }
 
+public function saveImage(Request $request)
+{
+  $img = $request->get('image');
+  $exploded = explode(",",$img);
+
+  if (str_contains($exploded[0], 'gif')) {
+    $ext = 'gif';
+  } else if(str_contains($exploded[0], 'png')) {
+    $ext = 'png';
+} else {
+$ext = 'jpg';
+}
+
+$decode = base64_decode($exploded[1]);
+
+$fileName = str_random() . "." . $ext;
+
+$path = public_path() . "/img/" . $fileName;
+
+if (file_put_contents($path,$decode)) {
+  echo "File Uploaded";
+}
+
+}
+
 }

@@ -136,6 +136,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::post('addComment', 'PostsController@addComment');
 
+	Route::post('saveImage', 'PostsController@saveImage');
+
 
 });
 

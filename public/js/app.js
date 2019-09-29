@@ -44781,7 +44781,13 @@ var app = new Vue({
       reader.readAsDataURL(file);
     },
     uploadImage: function uploadImage() {
-      alert(this.image);
+      axios.post('http://localhost:8000/saveImage', {
+        image: this.image
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     removeImage: function removeImage() {
       this.image = "";

@@ -44691,10 +44691,10 @@ var app = new Vue({
     msg: "Update New Posts :",
     content: '',
     posts: [],
-    likes: [],
     postId: "",
     successMsg: "",
-    commentData: ""
+    commentData: {},
+    commentSeen: false
   },
   ready: function ready() {
     this.created();
@@ -44710,13 +44710,15 @@ var app = new Vue({
       });
     })["catch"](function (error) {
       console.log(error);
-    });
-    axios.get('http://localhost:8000/likes').then(function (response) {
-      console.log(response);
-      _this.likes = response.data;
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    }); //
+    // axios.get('http://localhost:8000/likes')
+    // .then(response => {
+    //   console.log(response);
+    //   this.likes = response.data;
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   },
   methods: {
     addPost: function addPost() {
@@ -44754,10 +44756,10 @@ var app = new Vue({
         console.log(error);
       });
     },
-    addComment: function addComment(id) {
+    addComment: function addComment(post, key) {
       axios.post('http://localhost:8000/addComment', {
-        comment: this.commentData,
-        id: id
+        comment: this.commentData[key],
+        id: post.id
       }).then(function (response) {
         console.log('Saved Successfully');
 

@@ -259,8 +259,8 @@ overflow-y: scroll;
                 </div>
                 @endif
                 <div class="posts_div">
-                  <div v-for="post in posts">
-                    <div class="col-md-12" style="background-color:#fff; margin-top:10px; padding-top:5px">
+                  <div v-for="post,key in posts">
+                    <div class="col-md-12 col-sm-12 col-xs-12 all_posts" style="background-color:#fff; margin-top:10px; padding-top:5px">
                       <div class="col-md-1 pull-left">
                         <img :src="post.user.pic" style="width:60px;">
                       </div>
@@ -312,14 +312,14 @@ overflow-y: scroll;
                               @endif
                             </div>
                             <div class="col-md-4">
-                              <p id="showComment">Comment</p>
+                              <p @click="commentSeen= !commentSeen" class="commentHand">Comment <b>(@{{post.comments.length}})</b></p>
                             </div>
                           </div>
                         </div>
-                        <div id="commentBox">
+                        <div id="commentBox" v-if="commentSeen">
                           <div class="comment_form">
-                            <textarea class="form-control" v-model="commentData"></textarea>
-                            <button class="btn btn-success" @click="addComment(post.id)">Send</button>
+                            <textarea class="form-control" v-model="commentData[key]"></textarea>
+                            <button class="btn btn-success" @click="addComment(post,key)">Send</button>
 
                           </div>
                           <ul v-for="comment in post.comments">

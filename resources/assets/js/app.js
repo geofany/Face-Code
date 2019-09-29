@@ -20,10 +20,11 @@ const app = new Vue({
     msg: "Update New Posts :",
     content: '',
     posts:[],
-    likes:[],
     postId:"",
     successMsg:"",
-    commentData:"",
+    commentData:{},
+    commentSeen: false,
+
   },
 
   ready: function() {
@@ -45,15 +46,15 @@ const app = new Vue({
     .catch(function (error) {
       console.log(error);
     });
-
-    axios.get('http://localhost:8000/likes')
-    .then(response => {
-      console.log(response);
-      this.likes = response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    //
+    // axios.get('http://localhost:8000/likes')
+    // .then(response => {
+    //   console.log(response);
+    //   this.likes = response.data;
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   },
 
 
@@ -97,11 +98,11 @@ const app = new Vue({
       });
     },
 
-    addComment(id){
+    addComment(post,key){
 
       axios.post('http://localhost:8000/addComment', {
-        comment: this.commentData,
-        id: id
+        comment: this.commentData[key],
+        id: post.id
       })
       .then(function (response) {
         console.log('Saved Successfully');

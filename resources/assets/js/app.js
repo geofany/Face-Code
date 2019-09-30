@@ -131,10 +131,18 @@ const app = new Vue({
     uploadImage(){
 
       axios.post('http://localhost:8000/saveImage', {
-        image: this.image
+        image: this.image,
+        content: this.content,
+
       })
-      .then(function (response) {
-        console.log(response.data);
+      .then( (response) => {
+        console.log('Saved Successfully');
+        this.image="";
+        this.content="";        
+        if(response.status===200) {
+          // alert('Added');
+          app.posts = response.data;
+        }
       })
       .catch(function (error) {
         console.log(error);

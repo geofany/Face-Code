@@ -44784,10 +44784,24 @@ var app = new Vue({
       reader.readAsDataURL(file);
     },
     uploadImage: function uploadImage() {
+      var _this6 = this;
+
       axios.post('http://localhost:8000/saveImage', {
-        image: this.image
+        image: this.image,
+        content: this.content
       }).then(function (response) {
-        console.log(response.data);
+        console.log('Saved Successfully');
+        _this6.image = "";
+        _this6.content = "";
+
+        if (content == "") {
+          content = "";
+        }
+
+        if (response.status === 200) {
+          // alert('Added');
+          app.posts = response.data;
+        }
       })["catch"](function (error) {
         console.log(error);
       });

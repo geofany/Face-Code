@@ -89,7 +89,17 @@ $fileName = str_random() . "." . $ext;
 $path = public_path() . "/img/" . $fileName;
 
 if (file_put_contents($path,$decode)) {
-  echo "File Uploaded";
+  $content = $request->content;
+  $createPost = DB::table('posts')
+  ->insert(['content' => $content,
+  'user_id' => Auth::user()->id, 'image' => $fileName,
+  'status' => 0,
+  'created_at' => date("Y-m-d H:i:s"),
+  'updated_at' => date("Y-m-d H:i:s")]);
+
+  if ($createPost) {
+  return post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
+  }
 }
 
 }

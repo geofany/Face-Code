@@ -6,7 +6,7 @@
   <div class="col-md-3 pull-left" style="background-color:#fff;">
     <h3 align="center" style="margin-bottom:20px;">Messenger<a href="{{ url('/newMessages')}}"><i class="fa fa-pencil-square-o pull-right"></i></a></h3>
     <div v-for="privateMsgs in privateMsgs">
-      <li @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
+      <li v-if="privateMsgs.status==1" @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
         <div class="col-md-3 pull-left">
           <img :src="privateMsgs.pic" style="width:50px;" class="img-circle">
         </div>
@@ -15,6 +15,17 @@
           <p>here we will display messages from this users</p>
         </div>
       </li>
+
+      <li v-else @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
+        <div class="col-md-3 pull-left">
+          <img :src="privateMsgs.pic" style="width:50px;" class="img-circle">
+        </div>
+        <div class="col-md-9 pull-left" style="margin-top:5px">
+          <b>@{{privateMsgs.name}}</b><br>
+          <p>here we will display messages from this users</p>
+        </div>
+      </li>
+
     </div>
     <hr>
   </div>

@@ -2,9 +2,21 @@
 
 @section('content')
 
-<div class="col-md-12" style="padding:10px">
+<div class="col-md-12 msgDiv">
   <div class="col-md-3 pull-left" style="background-color:#fff;">
-    <h3 align="center" style="margin-bottom:20px;">Messenger<a href="{{ url('/newMessages')}}"><i class="fa fa-pencil-square-o pull-right"></i></a></h3>
+    <div class="row" style="padding:10px">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-6">
+        Messenger
+      </div>
+      <div class="col-md-2 pull-right">
+        <a href="{{ url('/newMessages')}}"><i class="fa fa-pencil-square-o pull-right"></i></a>
+      </div>
+    </div>
+
+
     <div v-for="privateMsgs in privateMsgs">
       <li v-if="privateMsgs.status==1" @click="messages(privateMsgs.id)" style="list-style:none; margin-top:10px; background-color:#F3F3F3; padding:5px;" class="row">
         <div class="col-md-3 pull-left">
@@ -29,8 +41,12 @@
     </div>
     <hr>
   </div>
-  <div class="col-md-6 center-con" style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA;">
+  <div class="col-md-6 msg_main">
     <h3 align="center">Messages</h3>
+  <p class="alert alert-success">@{{msg}}</p>
+<div class="" style="max-height:200px !important; overflow-y:scroll;">
+
+
     <div v-for="singleMsgs in singleMsgs">
       <div v-if="singleMsgs.user_from == <?php echo Auth::user()->id; ?>">
         <div class="col-md-12" style="margin-top:10px">
@@ -51,6 +67,7 @@
         </div>
       </div>
     </div>
+</div>
     <hr>
       <input type="hidden" v-model="conID">
       <textarea class="col-md-12 form-control" v-model="msgFrom" @keydown="inputHandler"
@@ -61,7 +78,7 @@ style="border:none; margin-top:15px;"></textarea>
 
   </div>
 
-  <div class="col-md-3 pull-right" style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA;">
+  <div class="col-md-3 pull-right msg_right">
     <h3 align="center">User Information</h3>
     <hr>
   </div>

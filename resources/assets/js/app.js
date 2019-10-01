@@ -27,6 +27,8 @@ const app = new Vue({
     commentSeen: false,
     image:'',
     bUrl:'http://localhost:8000',
+    qry:'',
+    results:[],
 
   },
 
@@ -98,7 +100,7 @@ openModal(id){
 
 updatePost(id){
 
-  
+
     // alert('Test');
     axios.post(this.bUrl + '/updatePost/' + id, {
       updatedContent: this.updatedContent
@@ -190,7 +192,19 @@ updatePost(id){
 
 removeImage(){
 this.image="";
-}
+},
+
+autoComplete(){
+  this.results=[];
+  axios.post(this.bUrl + '/search', {
+  qry: this.qry
+  })
+  .then( (response) => {
+      console.log(response);
+      app.results = response.data;
+
+  });
+},
 
   }
 

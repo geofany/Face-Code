@@ -6,6 +6,7 @@ use App\Traits\Friendable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\profile;
+use Cache;
 
 class User extends Authenticatable
 {
@@ -34,4 +35,14 @@ class User extends Authenticatable
     public function profile() {
       return $this->hasOne('App\profile');
   }
+
+public function isOnline()
+{
+  return Cache::has('active-user' . $this->id);
+}
+
+public function friends()
+{
+  return $this->belongsTo('App\friendships', 'id', 'requester');
+}
 }

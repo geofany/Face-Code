@@ -12,6 +12,32 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <style>
+  .msg_main{
+    background-color:#ffff;
+    border-left:5px solid #F5F8FA;
+    position: absolute;
+    left: calc(25%);
+  }
+  .msg_right{
+    background-color:#ffff;
+    border-left:5px solid #F5F8FA;
+    min-height:600px;
+    position:fixed;
+    right:0px
+  }
+  .msgDiv{
+    position:fixed; left:0
+  }
+
+  .left-sidebar li { padding:10px;
+    border-bottom:1px solid #ddd;
+    list-style:none; margin-left:-20px
+  }
+  .msgDiv li:hover{
+    cursor:pointer;
+  }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -42,135 +68,142 @@
               <span style="color:green; font-weight:bold; font-size:16px">({{App\friendships::
                 whereNull('status')
                 ->where('user_requested', Auth::user()->id)
-                ->count()}})</span></a></li>
+                ->count()}})
+              </span>
+            </a></li>
 
 
-                @endif
+            @endif
+          </ul>
+
+          <!-- Right Side Of Navbar -->
+          <ul class="nav navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @if (Auth::guest())
+            <li><a href="{{ route('login') }}">Login</a></li>
+            <li><a href="{{ route('register') }}">Register</a></li>
+            @else
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <i class="fa fa-comment fa-2x" aria-hidden="true">
+                </i>
+                <span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
+                  @include('profile.unread')
+                </span>
+              </a>
+              <ul class="dropdown-menu" role="menu" style="width:320px">
+                <div class="">
+                  Here we Go
+                </div>
+
               </ul>
+            </li>
+            <li>
+              <a href="{{ url('/friends') }}">
+                <i class="fa fa-users fa-2x" aria-hidden="true">
+                </i>
+              </a>
+            </li>
 
-              <!-- Right Side Of Navbar -->
-              <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                @if (Auth::guest())
-                <li><a href="{{ route('login') }}">Login</a></li>
-                <li><a href="{{ route('register') }}">Register</a></li>
-                @else
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <i class="fa fa-comment fa-2x" aria-hidden="true"></i><span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
-                      @include('profile.unread')
-                    </span>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
+                <span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
+                  {{App\notifications::
+                    where('status', 1)
+                    ->where('user_hero', Auth::user()->id)
+                    ->count()
+                  }}
+                </span>
+              </a>
+              <?php
+              $notes = DB::table('users')
+              ->leftJoin('notifications', 'users.id', 'notifications.user_logged')
+              ->where('user_hero', Auth::user()->id)
+              //->where('status', 1)
+              ->orderBy('notifications.id', 'desc')
+              ->get();
+              ?>
+
+
+
+              <ul class="dropdown-menu" role="menu">
+                @foreach($notes as $note)
+                <a href="{{url('/notifications')}}/{{$note->id}}">
+                  @if($note->status == 1)
+                  <li style="background:#E4E9F2; padding:10px;">
+                    @else
+                    <li style="padding:10px;">
+                      @endif
+                      <div class="row" style="min-width:350px;">
+
+                        <div class="col-md-2">
+
+
+                          <img src="{{$note->pic}}" style="width:50px; padding:5px; background:#FFF; border:1px solid #EEE;" class="img-rounded">
+                        </div>
+                        <div class="col-md-10">
+
+                          <b style="color:GREEN; font-size:90%;">{{ucwords($note->name)}}</b>
+                          <span style="color:black; font-size:90%;">{{$note -> note}}</span>
+                          <br>
+                          <small style="color:#90949C;"><i class="fa fa-users"></i> {{ date('F j, Y', strtotime($note -> created_at))}} at {{ date('H: i', strtotime($note -> created_at))}}</small>
+                        </div>
+                      </div>
+                    </li>
+                  </li>
+                </a>
+                @endforeach
+
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <img src="{{Auth::user()->pic}}" width="30px" height="30px" class="img-circle"/>
+                <span class="caret"></span>
+              </a>
+
+
+              <ul class="dropdown-menu" role="menu">
+
+
+                <li>
+                  <a href="{{ url('profile') }}/{{Auth::user()->slug}}">
+                    Profile
                   </a>
-                  <ul class="dropdown-menu" role="menu" style="width:320px">
-                    <div class="">
-                      Here we Go
-                    </div>
 
-                  </ul>
                 </li>
                 <li>
-                  <a href="{{ url('/friends') }}">
-                    <i class="fa fa-users fa-2x" aria-hidden="true">
-                    </i>
+                  <a href="{{ url('editProfile') }}">
+                    Edit Profile
                   </a>
+
                 </li>
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <i class="fa fa-globe fa-2x" aria-hidden="true"></i><span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
-                      {{App\notifications::
-                        where('status', 1)
-                        ->where('user_hero', Auth::user()->id)
-                        ->count()}}
-                      </span>
-                    </a>
-                    <?php
-                    $notes = DB::table('users')
-                    ->leftJoin('notifications', 'users.id', 'notifications.user_logged')
-                    ->where('user_hero', Auth::user()->id)
-                    //->where('status', 1)
-                    ->orderBy('notifications.id', 'desc')
-                    ->get();
-                    ?>
+                <li>
+                  <a href="{{ route('logout') }}"
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                  Logout</a>
 
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                  </form>
+                </li>
+              </ul>
+            </li>
 
+            @endif
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-                    <ul class="dropdown-menu" role="menu">
-                      @foreach($notes as $note)
-                      <a href="{{url('/notifications')}}/{{$note->id}}">
-                        @if($note->status == 1)
-                        <li style="background:#E4E9F2; padding:10px;">
-                          @else
-                          <li style="padding:10px;">
-                            @endif
-                            <div class="row" style="min-width:350px;">
+    @yield('content')
+  </div>
 
-                              <div class="col-md-2">
-
-
-                                <img src="{{$note->pic}}" style="width:50px; padding:5px; background:#FFF; border:1px solid #EEE;" class="img-rounded">
-                              </div>
-                              <div class="col-md-10">
-
-                                <b style="color:GREEN; font-size:90%;">{{ucwords($note->name)}}</b>
-                                <span style="color:black; font-size:90%;">{{$note -> note}}</span>
-                                <br>
-                                <small style="color:#90949C;"><i class="fa fa-users"></i> {{ date('F j, Y', strtotime($note -> created_at))}} at {{ date('H: i', strtotime($note -> created_at))}}</small>
-                              </div>
-                            </div>
-                          </li></a>
-                          @endforeach
-
-                        </ul>
-
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                          <img src="{{Auth::user()->pic}}" width="30px" height="30px" class="img-circle"/>
-                          <span class="caret"></span>
-                        </a>
-
-
-                        <ul class="dropdown-menu" role="menu">
-
-
-                          <li>
-                            <a href="{{ url('profile') }}/{{Auth::user()->slug}}">
-                              Profile
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="{{ url('editProfile') }}">
-                              Edit Profile
-                            </a>
-
-                          </li>
-
-                          <li>
-                            <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                            Logout
-                          </a>
-
-                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                          </form>
-                        </li>
-                      </ul>
-                    </li>
-
-                    @endif
-                  </ul>
-                </div>
-              </div>
-            </nav>
-
-            @yield('content')
-          </div>
-
-          <!-- Scripts -->
-          <script src="{{ asset('js/profile.js') }}"></script>
-        </body>
-        </html>
+  <!-- Scripts -->
+  <script src="{{ asset('js/profile.js') }}"></script>
+</body>
+</html>

@@ -16,6 +16,14 @@ class PostsController extends Controller
     return view('posts', compact('posts'));
   }
 
+  public function search(Request $request)
+  {
+    $qry = $request->qry;
+    return  $users= DB::table('users')
+    ->where('name', 'like', '%'. $qry . '%')
+    ->get();
+  }
+
   public function addPost(Request $request) {
     $content = $request->content;
     $createPost = DB::table('posts')

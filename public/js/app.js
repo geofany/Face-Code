@@ -44697,7 +44697,9 @@ var app = new Vue({
     commentData: {},
     commentSeen: false,
     image: '',
-    bUrl: 'http://localhost:8000'
+    bUrl: 'http://localhost:8000',
+    qry: '',
+    results: []
   },
   ready: function ready() {
     this.created();
@@ -44834,6 +44836,15 @@ var app = new Vue({
     },
     removeImage: function removeImage() {
       this.image = "";
+    },
+    autoComplete: function autoComplete() {
+      this.results = [];
+      axios.post(this.bUrl + '/search', {
+        qry: this.qry
+      }).then(function (response) {
+        console.log(response);
+        app.results = response.data;
+      });
     }
   }
 });

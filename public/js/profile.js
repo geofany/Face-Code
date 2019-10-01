@@ -44731,7 +44731,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/assets/js/bootstrap.js");
 var app = new Vue({
   el: '#app',
   data: {
-    msg: "i am from new:",
+    msg: "Click on user from left side:",
     content: '',
     privateMsgs: [],
     singleMsgs: [],

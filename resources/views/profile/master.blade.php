@@ -55,11 +55,18 @@
                 <li><a href="{{ route('login') }}">Login</a></li>
                 <li><a href="{{ route('register') }}">Register</a></li>
                 @else
-                <li>
-                  <a href="{{ url('/messages')}}">
-                    <i class="fa fa-comment fa-2x" aria-hidden="true">
-                    </i>
-                  </a>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="fa fa-comment fa-2x" aria-hidden="true"></i><span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
+                      @include('profile.unread')
+                      </span>
+                    </a>
+<ul class="dropdown-menu" role="menu" style="width:320px">
+<div class="">
+  Here we Go
+</div>
+
+</ul>
                 </li>
                 <li>
                   <a href="{{ url('/friends') }}">

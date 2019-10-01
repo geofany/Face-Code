@@ -44794,10 +44794,6 @@ var app = new Vue({
         _this6.image = "";
         _this6.content = "";
 
-        if (content == "") {
-          content = "";
-        }
-
         if (response.status === 200) {
           // alert('Added');
           app.posts = response.data;

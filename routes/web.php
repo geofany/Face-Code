@@ -3,6 +3,20 @@
 // return view('profile.forgotPassword');
 //
 // });
+Route::get('test', function() {
+
+$test1 = DB::table('conversation')
+->where('status', 1) //Unread messages
+->where('user_one', Auth::user()->id)
+->get();
+
+$test2 = DB::table('conversation')
+->where('status', 1) //Unread messages
+->where('user_two', Auth::user()->id)
+->get();
+
+return array_merge($test1 -> toArray(), $test2 -> toArray());
+});
 
 Route::get('try', function() {
 return App\post::with('user', 'likes', 'comments')->get();

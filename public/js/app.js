@@ -44690,12 +44690,14 @@ var app = new Vue({
   data: {
     msg: "Update New Posts :",
     content: '',
+    updatedContent: '',
     posts: [],
     postId: "",
     successMsg: "",
     commentData: {},
     commentSeen: false,
-    image: ''
+    image: '',
+    bUrl: 'http://localhost:8000'
   },
   ready: function ready() {
     this.created();
@@ -44703,7 +44705,7 @@ var app = new Vue({
   created: function created() {
     var _this = this;
 
-    axios.get('http://localhost:8000/posts').then(function (response) {
+    axios.get(this.bUrl + '/posts').then(function (response) {
       console.log(response);
       _this.posts = response.data;
       Vue.filter('myOwnTime', function (value) {
@@ -44718,7 +44720,7 @@ var app = new Vue({
       var _this2 = this;
 
       // alert('Test');
-      axios.post('http://localhost:8000/addPost', {
+      axios.post(this.bUrl + '/addPost', {
         content: this.content
       }).then(function (response) {
         _this2.content = "";
@@ -44735,25 +44737,53 @@ var app = new Vue({
     deletePost: function deletePost(id) {
       var _this3 = this;
 
-      axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
+      axios.get(this.bUrl + '/deletePost/' + id).then(function (response) {
         console.log(response);
         _this3.posts = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    likePost: function likePost(id) {
+    openModal: function openModal(id) {
       var _this4 = this;
 
-      axios.get('http://localhost:8000/likePost/' + id).then(function (response) {
+      axios.get(this.bUrl + '/posts/' + id).then(function (response) {
         console.log(response);
-        _this4.posts = response.data;
+        _this4.updatedContent = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    updatePost: function updatePost(id) {
+      var _this5 = this;
+
+      // alert('Test');
+      axios.post(this.bUrl + '/updatePost/' + id, {
+        updatedContent: this.updatedContent
+      }).then(function (response) {
+        _this5.content = "";
+        console.log('Changes Saved Successfully');
+
+        if (response.status === 200) {
+          // alert('Added');
+          app.posts = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    likePost: function likePost(id) {
+      var _this6 = this;
+
+      axios.get(this.bUrl + '/likePost/' + id).then(function (response) {
+        console.log(response);
+        _this6.posts = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     addComment: function addComment(post, key) {
-      axios.post('http://localhost:8000/addComment', {
+      axios.post(this.bUrl + '/addComment', {
         comment: this.commentData[key],
         id: post.id
       }).then(function (response) {
@@ -44772,27 +44802,27 @@ var app = new Vue({
       this.createImage(files[0]);
     },
     createImage: function createImage(file) {
-      var _this5 = this;
+      var _this7 = this;
 
       var image = new Image();
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this5.image = e.target.result;
+        _this7.image = e.target.result;
       };
 
       reader.readAsDataURL(file);
     },
     uploadImage: function uploadImage() {
-      var _this6 = this;
+      var _this8 = this;
 
-      axios.post('http://localhost:8000/saveImage', {
+      axios.post(this.bUrl + '/saveImage', {
         image: this.image,
         content: this.content
       }).then(function (response) {
         console.log('Saved Successfully');
-        _this6.image = "";
-        _this6.content = "";
+        _this8.image = "";
+        _this8.content = "";
 
         if (response.status === 200) {
           // alert('Added');

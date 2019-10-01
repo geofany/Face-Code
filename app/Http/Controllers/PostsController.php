@@ -39,6 +39,17 @@ class PostsController extends Controller
 
   }
 
+public function updatePost($id, Request $request)
+{
+$updatePost = DB::table('posts')->where('id', $id)->update([
+'content' => $request->updatedContent,
+
+]);
+if ($updatePost) {
+  return post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
+}
+}
+
 public function likePost($id){
 
 $likePost = DB::table('likes')->insert([

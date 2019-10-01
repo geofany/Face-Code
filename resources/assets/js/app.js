@@ -19,12 +19,14 @@ const app = new Vue({
   data: {
     msg: "Update New Posts :",
     content: '',
+    updatedContent:'',
     posts:[],
     postId:"",
     successMsg:"",
     commentData:{},
     commentSeen: false,
     image:'',
+    bUrl:'http://localhost:8000',
 
   },
 
@@ -35,7 +37,7 @@ const app = new Vue({
   },
 
   created() {
-    axios.get('http://localhost:8000/posts')
+    axios.get(this.bUrl + '/posts')
     .then(response => {
       console.log(response);
       this.posts = response.data;
@@ -53,7 +55,7 @@ const app = new Vue({
   methods: {
     addPost(){
       // alert('Test');
-      axios.post('http://localhost:8000/addPost', {
+      axios.post(this.bUrl + '/addPost', {
         content: this.content
       })
       .then((response) => {
@@ -69,7 +71,7 @@ const app = new Vue({
       });
     },
     deletePost(id){
-      axios.get('http://localhost:8000/deletePost/' + id)
+      axios.get(this.bUrl + '/deletePost/' + id)
       .then(response => {
         console.log(response);
         this.posts = response.data;
@@ -79,8 +81,44 @@ const app = new Vue({
         console.log(error);
       });
     },
+
+openModal(id){
+
+  axios.get(this.bUrl + '/posts/' + id)
+  .then(response => {
+    console.log(response);
+    this.updatedContent = response.data;
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+},
+
+updatePost(id){
+
+  
+    // alert('Test');
+    axios.post(this.bUrl + '/updatePost/' + id, {
+      updatedContent: this.updatedContent
+    })
+    .then((response) => {
+      this.content = "";
+      console.log('Changes Saved Successfully');
+      if(response.status===200) {
+        // alert('Added');
+        app.posts = response.data;
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+},
+
     likePost(id){
-      axios.get('http://localhost:8000/likePost/' + id)
+      axios.get(this.bUrl + '/likePost/' + id)
       .then(response => {
         console.log(response);
         this.posts = response.data;
@@ -93,7 +131,7 @@ const app = new Vue({
 
     addComment(post,key){
 
-      axios.post('http://localhost:8000/addComment', {
+      axios.post(this.bUrl + '/addComment', {
         comment: this.commentData[key],
         id: post.id
       })
@@ -130,7 +168,7 @@ const app = new Vue({
 
     uploadImage(){
 
-      axios.post('http://localhost:8000/saveImage', {
+      axios.post(this.bUrl + '/saveImage', {
         image: this.image,
         content: this.content,
 
@@ -138,7 +176,7 @@ const app = new Vue({
       .then( (response) => {
         console.log('Saved Successfully');
         this.image="";
-        this.content="";        
+        this.content="";
         if(response.status===200) {
           // alert('Added');
           app.posts = response.data;

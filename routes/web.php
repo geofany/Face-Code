@@ -1,22 +1,4 @@
 <?php
-// Route::get('forgotPassword', function() {
-// return view('profile.forgotPassword');
-//
-// });
-Route::get('test', function() {
-
-$test1 = DB::table('conversation')
-->where('status', 1) //Unread messages
-->where('user_one', Auth::user()->id)
-->get();
-
-$test2 = DB::table('conversation')
-->where('status', 1) //Unread messages
-->where('user_two', Auth::user()->id)
-->get();
-
-return array_merge($test1 -> toArray(), $test2 -> toArray());
-});
 
 Route::get('try', function() {
 return App\post::with('user', 'likes', 'comments')->get();
@@ -31,82 +13,7 @@ Route::get('/reset/{token}', function($token) {
 });
 
 
-Route::get('/messages', function() {
-	return view('messages');
 
-});
-
-Route::get('/newMessages', function() {
-	return view('newMessages');
-});
-
-Route::post('/sendMessage', 'ProfileController@sendMessage');
-
-Route::get('/getMessages', function() {
-	$allUsers1 = DB::table('users')
-	->Join('conversation', 'users.id', 'conversation.user_one')
-	->where('conversation.user_two', Auth::user()->id)
-	->get();
-	// return $allUsers1;
-
-	$allUsers2 = DB::table('users')
-	->Join('conversation', 'users.id', 'conversation.user_two')
-	->where('conversation.user_one', Auth::user()->id)
-	->get();
-	// return $allUsers2;
-
-	return array_merge($allUsers1->toArray(), $allUsers2->toArray());
-
-});
-
-Route::get('/getMessages/{id}', function($id) {
-	$update_status = DB::table('conversation')->where('id', $id)
-	->update([
-'status' => 0 //dibaca user
-]);
-
-	$userMsg = DB::table('messages')
-	->join('users', 'users.id', 'messages.user_from')
-	->where('messages.conversation_id',$id)->get();
-	return $userMsg;
-});
-
-
-Route::get('/', function () {
-	// return view('welcome');
-	$posts = App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
-	return view('welcome', compact('posts'));
-});
-
-Route::get('/posts', function () {
-	// $posts_json = DB::table('users')
-	// ->rightJoin('profiles', 'profiles.user_id', 'users.id')
-	// ->rightJoin('posts', 'posts.user_id', 'users.id')
-	// ->orderBy('posts.id', 'Desc')
-	// ->get();
-	// return $posts_json;
-
-	return App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
-});
-
-Route::post('addPost', 'PostsController@addPost');
-
-Route::get('/likes', function() {
-
-return App\likes::all();
-
-});
-
-Route::get('/', function() {
-
-$likes = App\likes::all();
-return view('welcome', compact('likes'));
-
-});
-
-Route::get('/deletePost/{id}', 'PostsController@deletePost');
-
-Route::get('/likePost/{id}', 'PostsController@likePost');
 
 Auth::routes();
 
@@ -157,7 +64,93 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::post('saveImage', 'PostsController@saveImage');
 
+	Route::get('/messages', function() {
+		return view('messages');
 
+	});
+
+	Route::get('/newMessages', function() {
+		return view('newMessages');
+	});
+
+	Route::post('/sendMessage', 'ProfileController@sendMessage');
+
+	Route::get('/getMessages', function() {
+		$allUsers1 = DB::table('users')
+		->Join('conversation', 'users.id', 'conversation.user_one')
+		->where('conversation.user_two', Auth::user()->id)
+		->get();
+		// return $allUsers1;
+
+		$allUsers2 = DB::table('users')
+		->Join('conversation', 'users.id', 'conversation.user_two')
+		->where('conversation.user_one', Auth::user()->id)
+		->get();
+		// return $allUsers2;
+
+		return array_merge($allUsers1->toArray(), $allUsers2->toArray());
+
+	});
+
+	Route::get('/getMessages/{id}', function($id) {
+		$update_status = DB::table('conversation')->where('id', $id)
+		->update([
+	'status' => 0 //dibaca user
+	]);
+
+		$userMsg = DB::table('messages')
+		->join('users', 'users.id', 'messages.user_from')
+		->where('messages.conversation_id',$id)->get();
+		return $userMsg;
+	});
+
+
+	Route::get('/', function () {
+		// return view('welcome');
+		$posts = App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
+		return view('welcome', compact('posts'));
+	});
+
+	Route::get('/posts', function () {
+		// $posts_json = DB::table('users')
+		// ->rightJoin('profiles', 'profiles.user_id', 'users.id')
+		// ->rightJoin('posts', 'posts.user_id', 'users.id')
+		// ->orderBy('posts.id', 'Desc')
+		// ->get();
+		// return $posts_json;
+
+		return App\post::with('user', 'likes', 'comments')->orderBy('created_at', 'DESC')->get();
+	});
+
+	Route::post('addPost', 'PostsController@addPost');
+
+	Route::get('/likes', function() {
+
+	return App\likes::all();
+
+	});
+
+	Route::get('/', function() {
+
+	$likes = App\likes::all();
+	return view('welcome', compact('likes'));
+
+	});
+
+	Route::get('/deletePost/{id}', 'PostsController@deletePost');
+
+	Route::get('/likePost/{id}', 'PostsController@likePost');
+
+	Route::get('posts/{id}', function($id) {
+
+
+$pData = App\post::where('id', $id)->get();
+echo $pData[0]->content;
+
+
+});
+
+Route::post('updatePost/{id}', 'PostsController@updatePost');
 });
 
 // Route::get('posts', 'HomeController@index');

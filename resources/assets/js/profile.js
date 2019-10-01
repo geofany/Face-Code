@@ -9,6 +9,7 @@ const app = new Vue({
     singleMsgs:[],
     msgFrom: '',
     conID: '',
+    bUrl:'http://localhost:8000',
 
   },
 
@@ -19,7 +20,7 @@ const app = new Vue({
   },
 
   created() {
-    axios.get('http://localhost:8000/getMessages')
+    axios.get(this.bUrl + '/getMessages')
     .then(response => {
       console.log(response.data);
       app.privateMsgs = response.data;
@@ -33,7 +34,7 @@ const app = new Vue({
 
   methods: {
     messages: function(id) {
-      axios.get('http://localhost:8000/getMessages/' + id)
+      axios.get(this.bUrl + '/getMessages/' + id)
       .then(response => {
         console.log(response.data);
         app.singleMsgs = response.data;
@@ -53,7 +54,7 @@ const app = new Vue({
     },
     sendMsg() {
       if (this.msgFrom) {
-        axios.post('http://localhost:8000/sendMessage', {
+        axios.post(this.bUrl + '/sendMessage', {
           conID: this.conID,
           msg: this.msgFrom
         })
@@ -74,14 +75,14 @@ const app = new Vue({
       app.friend_id = id;
     },
     sendNewMsg(){
-      axios.post('http://localhost:8000/sendNewMessage', {
+      axios.post(this.bUrl + '/sendNewMessage', {
         friend_id: this.friend_id,
         msg : this.newMsgFrom,
       })
       .then(response => {
         console.log(response.data);
         if (response.status===200) {
-          window.location.replace('http://localhost:8000/messages');
+          window.location.replace(this.bUrl + '/messages');
           app.msg = 'your message has been sent';
         }
 

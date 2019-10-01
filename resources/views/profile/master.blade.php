@@ -59,14 +59,14 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     <i class="fa fa-comment fa-2x" aria-hidden="true"></i><span class="badge" style="background:red; position:relative; top:-15px; left:-10px;">
                       @include('profile.unread')
-                      </span>
-                    </a>
-<ul class="dropdown-menu" role="menu" style="width:320px">
-<div class="">
-  Here we Go
-</div>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" style="width:320px">
+                    <div class="">
+                      Here we Go
+                    </div>
 
-</ul>
+                  </ul>
                 </li>
                 <li>
                   <a href="{{ url('/friends') }}">

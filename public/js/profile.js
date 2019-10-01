@@ -44736,13 +44736,14 @@ var app = new Vue({
     privateMsgs: [],
     singleMsgs: [],
     msgFrom: '',
-    conID: ''
+    conID: '',
+    bUrl: 'http://localhost:8000'
   },
   ready: function ready() {
     this.created();
   },
   created: function created() {
-    axios.get('http://localhost:8000/getMessages').then(function (response) {
+    axios.get(this.bUrl + '/getMessages').then(function (response) {
       console.log(response.data);
       app.privateMsgs = response.data;
     })["catch"](function (error) {
@@ -44751,7 +44752,7 @@ var app = new Vue({
   },
   methods: {
     messages: function messages(id) {
-      axios.get('http://localhost:8000/getMessages/' + id).then(function (response) {
+      axios.get(this.bUrl + '/getMessages/' + id).then(function (response) {
         console.log(response.data);
         app.singleMsgs = response.data;
         app.conID = response.data[0].conversation_id;
@@ -44767,7 +44768,7 @@ var app = new Vue({
     },
     sendMsg: function sendMsg() {
       if (this.msgFrom) {
-        axios.post('http://localhost:8000/sendMessage', {
+        axios.post(this.bUrl + '/sendMessage', {
           conID: this.conID,
           msg: this.msgFrom
         }).then(function (response) {
@@ -44785,14 +44786,16 @@ var app = new Vue({
       app.friend_id = id;
     },
     sendNewMsg: function sendNewMsg() {
-      axios.post('http://localhost:8000/sendNewMessage', {
+      var _this = this;
+
+      axios.post(this.bUrl + '/sendNewMessage', {
         friend_id: this.friend_id,
         msg: this.newMsgFrom
       }).then(function (response) {
         console.log(response.data);
 
         if (response.status === 200) {
-          window.location.replace('http://localhost:8000/messages');
+          window.location.replace(_this.bUrl + '/messages');
           app.msg = 'your message has been sent';
         }
       })["catch"](function (error) {
